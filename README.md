@@ -14,4 +14,4 @@
 Пациенты записываются на прием к врачам.
 В системе хранится расписание приемов и соблюдается контроль отсутствия пересечения записей.
 
-[SonarQube CLoud (sonarcloud)](https://sonarcloud.io/project/overview?id=law13r_polyclinic)
+[SonarQube CLoud (sonarcloud) проекта](https://sonarcloud.io/project/overview?id=law13r_polyclinic)
