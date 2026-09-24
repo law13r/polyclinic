@@ -21,9 +21,7 @@ void Patient::get1() const {
 	std::cout << "2 - вывести дату рождения" << std::endl;
 	std::cout << "3 - вывести номер телефона" << std::endl;
 	std::cout << "4 - отменить" << std::endl;
-	do {
-		std::cin >> choice;
-	} while (choice < 1 || choice > 4);
+	std::cin >> choice;
 	switch (choice) {
 	case 1:
 		std::cout << "Имя пациента: " << name << std::endl;
@@ -36,6 +34,8 @@ void Patient::get1() const {
 		break;
 	case 4:
 		return;
+	default:
+		break;
 	}
 	return;
 }
@@ -59,9 +59,7 @@ void Patient::set1() {
 	std::cout << "2 - ввести дату рождения" << std::endl;
 	std::cout << "3 - ввести номер телефона" << std::endl;
 	std::cout << "4 - отменить" << std::endl;
-	do {
-		std::cin >> choice;
-	} while (choice < 1 || choice > 4);
+	std::cin >> choice;
 	switch (choice) {
 	case 1:
 		std::cout << "Введите ФИО пациента: ";
@@ -80,6 +78,8 @@ void Patient::set1() {
 		break;
 	case 4:
 		return;
+	default:
+		break;
 	}
 	return;
 }

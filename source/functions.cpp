@@ -10,9 +10,7 @@ void mainMenu() {
 	std::vector<Appoint> apps;
 	while (1) {
 		std::cout << "\t\t\tПоликлиника\n1 - вход как пациент\n2 - вход как врач\n3 - вход как админ\n4 - выход\n";
-		do {
-			std::cin >> choice;
-		} while (choice < 1 || choice > 4);
+		std::cin >> choice;
 		switch (choice) {
 		case 1:
 			patientMenu();
@@ -25,6 +23,8 @@ void mainMenu() {
 			break;
 		case 4:
 			return;
+		default:
+			break;
 		}
 	};
 }
@@ -46,16 +46,12 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 	int patID = 0;
 	while (1) {
 		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
-		do {
-			std::cin >> choice;
-		} while (choice < 1 || choice > 3);
+		std::cin >> choice;
 		switch (choice) {
 		case 1:
 			printDoctors(doctors);
 			std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
-			do {
-				std::cin >> choice1;
-			} while (choice1 < 1 || choice1 > 4);
+			std::cin >> choice1;
 			switch (choice1) {
 			case 1: {
 				Doctor docNew(docID++);
@@ -85,6 +81,8 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 				doctors.erase(doctors.begin() + --index);
 				break;
 			case 4:
+				break;
+			default:
 				break;
 			}
 			break;
@@ -124,10 +122,14 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 				break;
 			case 4:
 				break;
+			default:
+				break;
 			}
 			break;
 		case 3:
 			return;
+		default:
+			break;
 		}
 	}
 }

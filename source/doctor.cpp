@@ -1,7 +1,6 @@
 #include "doctor.h"
 
-Doctor::Doctor(int id) {
-	this->id = id;
+Doctor::Doctor(int id) : id(id){
 	set();
 }
 
@@ -18,9 +17,7 @@ void Doctor::get1() const {
 	std::cout << "2 - вывести специальность" << std::endl;
 	std::cout << "3 - вывести кабинет" << std::endl;
 	std::cout << "4 - отменить" << std::endl;
-	do {
-		std::cin >> choice;
-	} while (choice < 1 || choice > 4);
+	std::cin >> choice;
 	switch (choice) {
 	case 1:
 		std::cout << "Имя врача: " << name << std::endl;
@@ -33,6 +30,8 @@ void Doctor::get1() const {
 		break;
 	case 4:
 		return;
+	default:
+		break;
 	}
 	return;
 }
@@ -73,6 +72,8 @@ void Doctor::set1() {
 		break;
 	case 4:
 		return;
+	default:
+		break;
 	}
 	return;
 }
