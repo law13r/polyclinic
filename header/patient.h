@@ -8,7 +8,7 @@ private:
 	long long phone;
 public:
 	Patient(int, std::string, struct date, long long);
-	Patient(int);
+	explicit Patient(int);
 	void get() const;
 	void get1() const;
 	void set();

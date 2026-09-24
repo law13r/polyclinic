@@ -7,7 +7,7 @@ private:
 	std::string speciality;
 	std::string office;
 public:
-	Doctor(int);
+	explicit Doctor(int);
 	void get() const;
 	void get1() const;
 	void set();
