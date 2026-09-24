@@ -5,7 +5,6 @@
 #include <windows.h>
 #include <vector>
 
-//class Person; 
 class Patient;
 class Doctor;
 class Appoint;
