@@ -17,13 +17,13 @@ Patient::Patient(int id) {
 	set();
 }
 
-void Patient::get() {
+void Patient::get() const {
 	std::cout << "Имя пациента: " << name << "\tДата рождения: " << doB.day << "." << doB.month << "." << doB.year << std::endl;
 	std::cout << "Номер телефона: " << phone << std::endl;
 	return;
 }
 
-void Patient::get1() {
+void Patient::get1() const {
 	int choice;
 	std::cout << "Какую характеристику вывести?" << std::endl;
 	std::cout << "1 - вывести имя" << std::endl;
@@ -51,7 +51,7 @@ void Patient::get1() {
 
 void Patient::set() {
 	std::cout << "Введите ФИО пациента: ";
-	while (!getchar());
+	std::cin.ignore();
 	std::getline(std::cin, name);
 	std::cout << "Введите дату рождения пациента (дд мм гггг): ";
 	std::cin >> doB.day;
@@ -74,7 +74,7 @@ void Patient::set1() {
 	switch (choice) {
 	case 1:
 		std::cout << "Введите ФИО пациента: ";
-		while (!getchar());
+		std::cin.ignore();
 		std::getline(std::cin, name);
 		break;
 	case 2:

@@ -8,8 +8,8 @@ private:
 	std::string office;
 public:
 	Doctor(int);
-	void get();
-	void get1();
+	void get() const;
+	void get1() const;
 	void set();
 	void set1();
 	~Doctor();

@@ -8,13 +8,13 @@ Doctor::Doctor(int id) {
 	set();
 }
 
-void Doctor::get() {
+void Doctor::get() const {
 	std::cout << "Имя врача: " << name << "\tСпециальность: " << speciality << std::endl;
 	std::cout << "Кабинет " << office << std::endl;
 	return;
 }
 
-void Doctor::get1() {
+void Doctor::get1() const {
 	int choice;
 	std::cout << "Какую характеристику вывести?" << std::endl;
 	std::cout << "1 - вывести имя" << std::endl;
@@ -42,7 +42,7 @@ void Doctor::get1() {
 
 void Doctor::set() {
 	std::cout << "Введите ФИО врача: ";
-	while (!getchar());
+	std::cin.ignore();
 	std::getline(std::cin, name);
 	std::cout << "Введите специальность врача: ";
 	std::cin >> speciality;
@@ -62,12 +62,12 @@ void Doctor::set1() {
 	} while (choice < 1 || choice > 4);
 	switch (choice) {
 	case 1:
-		std::cout << "Введите ФИО пациента: ";
-		while (!getchar());
+		std::cout << "Введите ФИО врача: ";
+		std::cin.ignore();
 		std::getline(std::cin, name);
 		break;
 	case 2:
-		std::cout << "Введите дату рождения пациента: ";
+		std::cout << "Введите специальность врача: ";
 		std::cin >> speciality;
 		break;
 	case 3:

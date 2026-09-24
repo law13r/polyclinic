@@ -9,8 +9,8 @@ private:
 public:
 	Patient(int, std::string, struct date, long long);
 	Patient(int);
-	void get();
-	void get1();
+	void get() const;
+	void get1() const;
 	void set();
 	void set1();
 	~Patient();

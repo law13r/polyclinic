@@ -13,8 +13,8 @@ void mainMenu();
 void patientMenu();
 void doctorMenu();
 void adminMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
-void printPatients(std::vector<Patient>&);
-void printDoctors(std::vector<Doctor>&);
+void printPatients(const std::vector<Patient>&);
+void printDoctors(const std::vector<Doctor>&);
 
 struct date {
 	int day;

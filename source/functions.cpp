@@ -63,8 +63,10 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 				break;
 			}
 			case 2:
-				std::cout << "Введите номер объекта в списке: ";
-				std::cin >> index;
+				do {
+					std::cout << "Введите номер объекта в списке: ";
+					std::cin >> index;
+				} while (index < 1 || index > static_cast<int>(doctors.size()));
 				index--;
 				do {
 					std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
@@ -76,8 +78,10 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 					doctors[index].set1();
 				break;
 			case 3:
-				std::cout << "Введите номер объекта в списке: ";
-				std::cin >> index;
+				do {
+					std::cout << "Введите номер объекта в списке: ";
+					std::cin >> index;
+				} while (index < 1 || index > static_cast<int>(doctors.size()));
 				doctors.erase(doctors.begin() + --index);
 				break;
 			case 4:
@@ -97,8 +101,10 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 				break;
 			}
 			case 2:
-				std::cout << "Введите номер объекта в списке: ";
-				std::cin >> index;
+				do {
+					std::cout << "Введите номер объекта в списке: ";
+					std::cin >> index;
+				} while (index < 1 || index > static_cast<int>(patients.size()));
 				index--;
 				do {
 					std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
@@ -110,8 +116,10 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 					patients[index].set1();
 				break;
 			case 3:
-				std::cout << "Введите номер объекта в списке: ";
-				std::cin >> index;
+				do {
+					std::cout << "Введите номер объекта в списке: ";
+					std::cin >> index;
+				} while (index < 1 || index > static_cast<int>(patients.size()));
 				patients.erase(patients.begin() + --index);
 				break;
 			case 4:
@@ -124,7 +132,7 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 	}
 }
 
-void printPatients(std::vector<Patient>& patients) {
+void printPatients(const std::vector<Patient>& patients) {
 	int i = 0;
 	if (patients.empty()) {
 		std::cout << "Список пуст." << std::endl;
@@ -138,7 +146,7 @@ void printPatients(std::vector<Patient>& patients) {
 	return;
 }
 
-void printDoctors(std::vector<Doctor>& doctors) {
+void printDoctors(const std::vector<Doctor>& doctors) {
 	int i = 0;
 	if (doctors.empty()) {
 		std::cout << "Список пуст." << std::endl;
