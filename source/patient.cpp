@@ -1,19 +1,10 @@
 #include "patient.h"
 
-Patient::Patient(int id, std::string name, struct date doB, long long phone) {
-	this->id = id;
-	this->name = name;
-	this->doB = doB;
-	this->phone = phone;
+Patient::Patient(int id, std::string name, struct date doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
 }
 
 Patient::Patient(int id) {
-	this->id = id++;
-	name = "default";
-	doB.day = 1;
-	doB.month = 1;
-	doB.year = 1900;
-	phone = 80000000000;
+	this->id = id;
 	set();
 }
 

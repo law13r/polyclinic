@@ -2,9 +2,6 @@
 
 Doctor::Doctor(int id) {
 	this->id = id;
-	name = "default";
-	speciality = "default";
-	office = "default";
 	set();
 }
 
