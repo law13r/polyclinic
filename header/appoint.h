@@ -3,10 +3,10 @@
 class Appoint {
 private:
 	struct date day;
-	int hr;
-	int mt;
-	int pat;
-	int doc;
+	int hour;
+	int minute;
+	int patient;
+	int doctor;
 public:
 	Appoint(int, int, struct date, int, int);
 	~Appoint();
