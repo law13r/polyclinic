@@ -42,95 +42,109 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 	int choice1;
 	int choice2;
 	int index;
-	int docID = 0;
 	int patID = 0;
 	while (1) {
 		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
 		std::cin >> choice;
 		switch (choice) {
 		case 1:
-			printDoctors(doctors);
-			std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
-			std::cin >> choice1;
-			switch (choice1) {
-			case 1: {
-				Doctor docNew(docID++);
-				doctors.push_back(docNew);
-				break;
-			}
-			case 2:
-				do {
-					std::cout << "Введите номер объекта в списке: ";
-					std::cin >> index;
-				} while (index < 1 || index > static_cast<int>(doctors.size()));
-				index--;
-				do {
-					std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
-					std::cin >> choice2;
-				} while (choice2 < 1 || choice2 > 2);
-				if (choice2 == 1)
-					doctors[index].set();
-				else
-					doctors[index].set1();
-				break;
-			case 3:
-				do {
-					std::cout << "Введите номер объекта в списке: ";
-					std::cin >> index;
-				} while (index < 1 || index > static_cast<int>(doctors.size()));
-				doctors.erase(doctors.begin() + --index);
-				break;
-			case 4:
-				break;
-			default:
-				break;
-			}
+			doctorsManagement(doctors);
 			break;
 		case 2:
-			printPatients(patients);
-			std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
-			do {
-				std::cin >> choice1;
-			} while (choice1 < 1 || choice1 > 4);
-			switch (choice1) {
-			case 1: {
-				Patient patNew(patID++);
-				patients.push_back(patNew);
-				break;
-			}
-			case 2:
-				do {
-					std::cout << "Введите номер объекта в списке: ";
-					std::cin >> index;
-				} while (index < 1 || index > static_cast<int>(patients.size()));
-				index--;
-				do {
-					std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
-					std::cin >> choice2;
-				} while (choice2 < 1 || choice2 > 2);
-				if (choice2 == 1)
-					patients[index].set();
-				else
-					patients[index].set1();
-				break;
-			case 3:
-				do {
-					std::cout << "Введите номер объекта в списке: ";
-					std::cin >> index;
-				} while (index < 1 || index > static_cast<int>(patients.size()));
-				patients.erase(patients.begin() + --index);
-				break;
-			case 4:
-				break;
-			default:
-				break;
-			}
+			patientsManagement(patients);
 			break;
 		case 3:
 			return;
 		default:
 			break;
 		}
+	}
+}
+void doctorsManagement(std::vector<Doctor>& doctors) {
+	int choice;
+	int choice1;
+	int index;
+	int docID = 0;
+	printDoctors(doctors);
+	std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
+	std::cin >> choice;
+	switch (choice) {
+	case 1: {
+		Doctor docNew(docID++);
+		doctors.push_back(docNew);
+		break;
+	}
+	case 2:
+		do {
+			std::cout << "Введите номер объекта в списке: ";
+			std::cin >> index;
+		} while (index < 1 || index > static_cast<int>(doctors.size()));
+		index--;
+		do {
+			std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
+			std::cin >> choice1;
+		} while (choice1 < 1 || choice1 > 2);
+		if (choice1 == 1)
+			doctors[index].set();
+		else
+			doctors[index].set1();
+		break;
+	case 3:
+		do {
+			std::cout << "Введите номер объекта в списке: ";
+			std::cin >> index;
+		} while (index < 1 || index > static_cast<int>(doctors.size()));
+		doctors.erase(doctors.begin() + --index);
+		break;
+	case 4:
+		break;
+	default:
+		break;
+	}
+}
+
+void patientsManagement(std::vector<Patient>& patients) {
+	int choice;
+	int choice1;
+	int index;
+	int patID = 0;
+	printPatients(patients);
+	std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
+	do {
+		std::cin >> choice;
+	} while (choice < 1 || choice > 4);
+	switch (choice) {
+	case 1: {
+		Patient patNew(patID++);
+		patients.push_back(patNew);
+		break;
+	}
+	case 2:
+		do {
+			std::cout << "Введите номер объекта в списке: ";
+			std::cin >> index;
+		} while (index < 1 || index > static_cast<int>(patients.size()));
+		index--;
+		do {
+			std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
+			std::cin >> choice1;
+		} while (choice1 < 1 || choice1 > 2);
+		if (choice1 == 1)
+			patients[index].set();
+		else
+			patients[index].set1();
+		break;
+	case 3:
+		do {
+			std::cout << "Введите номер объекта в списке: ";
+			std::cin >> index;
+		} while (index < 1 || index > static_cast<int>(patients.size()));
+		patients.erase(patients.begin() + --index);
+		break;
+	case 4:
+		break;
+	default:
+		break;
 	}
 }
 
