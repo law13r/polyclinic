@@ -1,11 +1,11 @@
 #include "appoint.h"
 
-Appoint::Appoint(int doc, int pat, struct date day, int hour, int minute) {
+Appoint::Appoint(int doc, int pat, struct date day, int hr, int mt) {
 	this->doc = doc;
 	this->pat = pat;
 	this->day = day;
-	this->hour = hour;
-	this->minute = minute;
+	this->hr = hr;
+	this->mt = mt;
 }
 
 Appoint::~Appoint() {

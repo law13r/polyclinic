@@ -3,8 +3,8 @@
 class Appoint {
 private:
 	struct date day;
-	int hour;
-	int minute;
+	int hr;
+	int mt;
 	int pat;
 	int doc;
 public:
