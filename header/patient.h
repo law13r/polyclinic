@@ -7,7 +7,7 @@ private:
 	struct date doB;
 	long long phone;
 public:
-	Patient(int, std::string, struct date, long long);
+	Patient(int, const std::string, struct date, long long);
 	explicit Patient(int);
 	void get() const;
 	void get1() const;

@@ -39,10 +39,6 @@ void doctorMenu() {
 
 void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std::vector<Appoint> &apps) {
 	int choice;
-	int choice1;
-	int choice2;
-	int index;
-	int patID = 0;
 	while (true) {
 		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
 		std::cin >> choice;
