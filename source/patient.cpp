@@ -1,6 +1,6 @@
 #include "patient.h"
 
-Patient::Patient(int id, const std::string name, struct date doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
+Patient::Patient(int id, const std::string& name, struct date doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
 }
 
 Patient::Patient(int id) : id(id) {

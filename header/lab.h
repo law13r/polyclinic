@@ -12,7 +12,7 @@ class Appoint;
 void mainMenu();
 void patientMenu();
 void doctorMenu();
-void adminMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
+void adminMenu(std::vector<Patient>&, std::vector<Doctor>&);
 void doctorsManagement(std::vector<Doctor>&);
 void patientsManagement(std::vector<Patient>&);
 void printPatients(const std::vector<Patient>&);

@@ -7,7 +7,6 @@ void mainMenu() {
 	int choice;
 	std::vector<Patient> patients;
 	std::vector<Doctor> doctors;
-	std::vector<Appoint> apps;
 	while (true) {
 		std::cout << "\t\t\tПоликлиника\n1 - вход как пациент\n2 - вход как врач\n3 - вход как админ\n4 - выход\n";
 		std::cin >> choice;
@@ -19,7 +18,7 @@ void mainMenu() {
 			doctorMenu();
 			break;
 		case 3:
-			adminMenu(patients, doctors, apps);
+			adminMenu(patients, doctors);
 			break;
 		case 4:
 			return;
@@ -37,7 +36,7 @@ void doctorMenu() {
 	std::cout << "В процессе..." << std::endl;
 }
 
-void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std::vector<Appoint> &apps) {
+void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors) {
 	int choice;
 	while (true) {
 		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
