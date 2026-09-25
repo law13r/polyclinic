@@ -8,7 +8,7 @@ void mainMenu() {
 	std::vector<Patient> patients;
 	std::vector<Doctor> doctors;
 	std::vector<Appoint> apps;
-	while (1) {
+	while (true) {
 		std::cout << "\t\t\tПоликлиника\n1 - вход как пациент\n2 - вход как врач\n3 - вход как админ\n4 - выход\n";
 		std::cin >> choice;
 		switch (choice) {
@@ -43,7 +43,7 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 	int choice2;
 	int index;
 	int patID = 0;
-	while (1) {
+	while (true) {
 		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
 		std::cin >> choice;
 		switch (choice) {
