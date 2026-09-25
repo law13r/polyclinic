@@ -10,6 +10,8 @@ private:
 public:
 	Appoint(int, int, struct date, int, int);
 	Appoint(const Appoint&) = default;
+	Appoint& operator=(const Appoint&) = default;
+	Appoint& operator=(Appoint&&) noexcept = default;
 	Appoint(Appoint&&) noexcept = default;
 	~Appoint();
 };

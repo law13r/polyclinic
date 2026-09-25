@@ -11,6 +11,8 @@ public:
 	explicit Patient(int);
 	Patient(const Patient&) = default;
 	Patient(Patient&&) noexcept = default;
+	Patient& operator=(const Patient&) = default;
+	Patient& operator=(Patient&&) noexcept = default;
 	void get() const;
 	void get1() const;
 	void set();
