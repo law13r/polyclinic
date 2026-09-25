@@ -17,6 +17,7 @@ void doctorsManagement(std::vector<Doctor>&);
 void patientsManagement(std::vector<Patient>&);
 void printPatients(const std::vector<Patient>&);
 void printDoctors(const std::vector<Doctor>&);
+int correct(struct date);
 
 struct date {
 	int day;

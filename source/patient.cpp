@@ -44,9 +44,11 @@ void Patient::set() {
 	std::cin.ignore();
 	std::getline(std::cin, name);
 	std::cout << "Введите дату рождения пациента (дд мм гггг): ";
-	std::cin >> doB.day;
-	std::cin >> doB.month;
-	std::cin >> doB.year;
+	do {
+		std::cin >> doB.day;
+		std::cin >> doB.month;
+		std::cin >> doB.year;
+	} while (correct(this->doB) != 0);
 	std::cout << "Введите номер телефона пациента в формате 8XXXXXXXXXX: ";
 	std::cin >> phone;
 }

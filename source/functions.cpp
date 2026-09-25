@@ -170,3 +170,15 @@ void printDoctors(const std::vector<Doctor>& doctors) {
 	}
 	return;
 }
+
+int correct(struct date dat) {
+	if (dat.day < 1 || dat.day > 31)
+		return 1;
+	if (dat.day > 30 && ((dat.month % 2 == 1 && dat.month < 8) || (dat.month % 2 == 0 && dat.month > 7)))
+		return 1;
+	if (dat.day > 29 && dat.month == 2)
+		return 1;
+	if (dat.day > 28 && dat.month == 2 && dat.year % 4 == 0)
+		return 1;
+	return 0;
+}
