@@ -9,6 +9,8 @@ private:
 public:
 	Patient(int, const std::string&, struct date, long long);
 	explicit Patient(int);
+	Patient(const Patient&) = default;
+	Patient(Patient&&) noexcept = default;
 	void get() const;
 	void get1() const;
 	void set();

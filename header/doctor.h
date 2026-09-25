@@ -8,6 +8,8 @@ private:
 	std::string office;
 public:
 	explicit Doctor(int);
+	Doctor(const Doctor&) = default;
+	Doctor(Doctor&&) noexcept = default;
 	void get() const;
 	void get1() const;
 	void set();

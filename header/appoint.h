@@ -9,5 +9,7 @@ private:
 	int doctor;
 public:
 	Appoint(int, int, struct date, int, int);
+	Appoint(const Appoint&) = default;
+	Appoint(Appoint&&) noexcept = default;
 	~Appoint();
 };
