@@ -25,7 +25,7 @@ void mainMenu() {
 		default:
 			break;
 		}
-	};
+	}
 }
 
 void patientMenu() {

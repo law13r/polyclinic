@@ -1,6 +1,6 @@
 #include "appoint.h"
 
-Appoint::Appoint(int doctor, int patient, struct date day, int hour, int minute) : doctor(doctor), patient(patient), day(day), hour(hour), minute(minute) {
+Appoint::Appoint(int doctor, int patient, struct date day, int hour, int minute) : day(day), hour(hour), minute(minute), patient(patient), doctor(doctor) {
 
 }
 
