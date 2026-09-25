@@ -77,7 +77,3 @@ void Doctor::set1() {
 	}
 	return;
 }
-
-Doctor::~Doctor() {
-	std::cout << "Врач " << this->id << " удален." << std::endl;
-}

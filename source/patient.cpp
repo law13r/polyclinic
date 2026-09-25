@@ -82,7 +82,3 @@ void Patient::set1() {
 	}
 	return;
 }
-
-Patient::~Patient() {
-	std::cout << "Пациент " << this->id << " удален." << std::endl;
-}
