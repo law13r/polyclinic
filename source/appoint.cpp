@@ -1,8 +1,8 @@
 #include "appoint.h"
 
-Appoint::Appoint(int doctor, int patient, struct date day, int hour, int minute) {
-	this->doctor = doctor;
-	this->patient = patient;
+Appoint::Appoint(int doc, int pat, struct date day, int hour, int minute) {
+	this->doc = doc;
+	this->pat = pat;
 	this->day = day;
 	this->hour = hour;
 	this->minute = minute;
