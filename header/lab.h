@@ -12,11 +12,11 @@ class Doctor;
 class Appoint;
 
 void mainMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
-void patientMenu(std::vector<Doctor>&);
-void doctorMenu(std::vector<Patient>&, std::vector<Appoint>&);
+void patientMenu();
+void doctorMenu();
 void adminMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
 void doctorsManagement(std::vector<Doctor>&, std::vector<Patient>&, std::vector<Appoint>&);
-void patientsManagement(std::vector<Patient>&, std::vector<Appoint>&);
+void patientsManagement(std::vector<Patient>&);
 void printPatients(const std::vector<Patient>&);
 void printDoctors(const std::vector<Doctor>&);
 bool dateisValid(std::string&);

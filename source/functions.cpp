@@ -10,10 +10,10 @@ void mainMenu(std::vector<Patient>& patients, std::vector<Doctor>& doctors, std:
 		std::cin >> choice;
 		switch (choice) {
 		case 1:
-			patientMenu(doctors);
+			patientMenu();
 			break;
 		case 2:
-			doctorMenu(patients, appoints);
+			doctorMenu();
 			break;
 		case 3:
 			adminMenu(patients, doctors, appoints);
@@ -26,11 +26,11 @@ void mainMenu(std::vector<Patient>& patients, std::vector<Doctor>& doctors, std:
 	}
 }
 
-void patientMenu(std::vector<Doctor> &doctors) {
+void patientMenu() {
 	std::cout << "In progress..." << '\n';
 }
 
-void doctorMenu(std::vector<Patient> &patients, std::vector<Appoint> &appoints) {
+void doctorMenu() {
 	std::cout << "In progress..." << '\n';
 }
 
@@ -44,7 +44,7 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 			doctorsManagement(doctors, patients, appoints);
 			break;
 		case 2:
-			patientsManagement(patients, appoints);
+			patientsManagement(patients);
 			break;
 		case 3:
 			return;
@@ -57,7 +57,7 @@ void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patie
 	int choice;
 	int choice1;
 	int index;
-	int docID = static_cast<int>(doctors.size());
+	auto docID = static_cast<int>(doctors.size());
 	printDoctors(doctors);
 	std::cout << "1 - create new object\n2 - edit existing object\n3 - delete object\n4 - show appointments to doctor\n5 - cancel\n";
 	std::cin >> choice;
@@ -107,11 +107,11 @@ void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patie
 	}
 }
 
-void patientsManagement(std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
+void patientsManagement(std::vector<Patient>& patients) {
 	int choice;
 	int choice1;
 	int index;
-	int patID = static_cast<int>(patients.size());
+	auto patID = static_cast<int>(patients.size());
 	printPatients(patients);
 	std::cout << "1 - create new object\n2 - edit existing object\n3 - delete object\n4 - cancel\n";
 	do {
@@ -418,7 +418,7 @@ Appoint addAppoint(Doctor& doctor) {
 }
 
 bool patientExist(std::vector<Patient>& patients, int id) {
-	auto target = std::find_if(patients.begin(), patients.end(), [id](const Patient patient) {
+	auto target = std::find_if(patients.begin(), patients.end(), [id](const Patient& patient) {
 		return patient.getID() == id;
 		});
 	if (target != patients.end())

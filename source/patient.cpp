@@ -1,13 +1,13 @@
 #include "patient.h"
 #include "appoint.h"
 
-Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone, std::vector<Appoint*>& appoints) : id(id), name(name), doB(doB), phone(phone), appoints(appoints) {
+Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone, const std::vector<Appoint*>& appoints) : id(id), name(name), doB(doB), phone(phone), appoints(appoints) {
 }
 
-Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone) : id(id), name(name), doB(doB), phone(phone), appoints({}) {
+Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
 }
 
-Patient::Patient(int id) : id(id), name("default"), doB("default"), phone(0), appoints({}) {
+Patient::Patient(int id) : id(id), name("default"), doB("default"), phone(0) {
 }
 
 std::string Patient::getName() const {
@@ -30,18 +30,18 @@ int Patient::getID() const {
 	return id;
 }
 
-void Patient::setName(const std::string& name) {
-	this->name = name;
+void Patient::setName(std::string_view nName) {
+	name = nName;
 	return;
 }
 
-void Patient::setDoB(const std::string& doB) {
-	this->doB = doB;
+void Patient::setDoB(std::string_view nDoB) {
+	doB = nDoB;
 	return;
 }
 
-void Patient::setPhone(long long& phone) {
-	this->phone = phone;
+void Patient::setPhone(const long long& nPhone) {
+	phone = nPhone;
 	return;
 }
 
@@ -50,7 +50,7 @@ void Patient::setAppoint(Appoint* appoint) {
 	return;
 }
 
-void Patient::setID(int& id) {
-	this->id = id;
+void Patient::setID(const int& nID) {
+	id = nID;
 	return;
 }

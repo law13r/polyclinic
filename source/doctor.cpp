@@ -1,13 +1,13 @@
 #include "doctor.h"
 #include "appoint.h"
 
-Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::vector<Appoint*>& appoints) : id(id), name(name), speciality(speciality), office(office), appoints(appoints) {
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, const std::vector<Appoint*>& appoints) : id(id), name(name), speciality(speciality), office(office), appoints(appoints) {
 }
 
-Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office) : id(id), name(name), speciality(speciality), office(office), appoints({}) {
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office) : id(id), name(name), speciality(speciality), office(office) {
 }
 
-Doctor::Doctor(int id) : id(id), name("default"), speciality("default"), office("default"), appoints({}) {
+Doctor::Doctor(int id) : id(id), name("default"), speciality("default"), office("default") {
 }
 
 std::string Doctor::getName() const {
@@ -30,8 +30,8 @@ int Doctor::getID() const {
 	return id;
 }
 
-void Doctor::setName(const std::string& name) {
-	this->name = name;
+void Doctor::setName(const std::string& nName) {
+	name = nName;
 	return;
 }
 
@@ -40,27 +40,29 @@ void Doctor::setSpec(const std::string& spec) {
 	return;
 }
 
-void Doctor::setOffice(const std::string& office) {
-	this->office = office;
+void Doctor::setOffice(const std::string& nOffice) {
+	office = nOffice;
 	return;
 }
 
 void Doctor::setAppoint(Appoint* appoint) {
 	appoints.push_back(appoint);
-}
-void Doctor::setID(int& id) {
-	this->id = id;
 	return;
 }
 
-bool Doctor::hasNoAppoints() {
+void Doctor::setID(const int& nID) {
+	id = nID;
+	return;
+}
+
+bool Doctor::hasNoAppoints() const {
 	if (appoints.empty())
 		return true;
 	else
 		return false;
 }
 
-void Doctor::writeAppoints() {
+void Doctor::writeAppoints() const {
 	int i = 1;
 	if (appoints.empty())
 		return;

@@ -6,7 +6,7 @@ Appoint::Appoint(int docID, int patID, const std::string& date, const std::strin
 Appoint::Appoint(int docID, const std::string& date, const std::string& time) : date(date), time(time), docID(docID) {
 }
 
-Appoint::Appoint(int docID) : docID(docID), date("default"), time("default") {
+Appoint::Appoint(int docID) : date("default"), time("default"), docID(docID) {
 	return;
 }
 
@@ -26,22 +26,22 @@ std::string Appoint::getTime() const {
 	return time;
 }
 
-void Appoint::setDocID(int& id) {
+void Appoint::setDocID(const int& id) {
 	docID = id;
 	return;
 }
 
-void Appoint::setPatID(int& id) {
+void Appoint::setPatID(const int& id) {
 	patID = id;
 	return;
 }
 
-void Appoint::setDate(const std::string& nDate) {
+void Appoint::setDate(std::string_view nDate) {
 	date = nDate;
 	return;
 }
 
-void Appoint::setTime(const std::string& nTime) {
+void Appoint::setTime(std::string_view nTime) {
 	time = nTime;
 	return;
 }

@@ -9,7 +9,7 @@ private:
 	long long phone;
 	std::vector<Appoint*> appoints;
 public:
-	Patient(int, const std::string&, const std::string&, long long, std::vector<Appoint*>&);
+	Patient(int, const std::string&, const std::string&, long long, const std::vector<Appoint*>&);
 	Patient(int, const std::string&, const std::string&, long long);
 	explicit Patient(int);
 
@@ -19,9 +19,9 @@ public:
 	std::vector<Appoint*> getAppoints() const;
 	int getID() const;
 
-	void setName(const std::string&);
-	void setDoB(const std::string&);
-	void setPhone(long long&);
+	void setName(std::string_view);
+	void setDoB(std::string_view);
+	void setPhone(const long long&);
 	void setAppoint(Appoint*);
-	void setID(int&);
+	void setID(const int&);
 };
