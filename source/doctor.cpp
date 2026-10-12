@@ -1,18 +1,13 @@
 #include "doctor.h"
 #include "appoint.h"
 
-Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::vector<Appoint*> appoints) : id(id), name(name), speciality(speciality), office(office), appoints(appoints) {
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::vector<Appoint*>& appoints) : id(id), name(name), speciality(speciality), office(office), appoints(appoints) {
 }
 
-Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office) : id(id), name(name), speciality(speciality), office(office) {
-	appoints = {};
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office) : id(id), name(name), speciality(speciality), office(office), appoints({}) {
 }
 
-Doctor::Doctor(int id) : id(id){
-	name = "default";
-	speciality = "default";
-	office = "default";
-	appoints = {};
+Doctor::Doctor(int id) : id(id), name("default"), speciality("default"), office("default"), appoints({}) {
 }
 
 std::string Doctor::getName() const {
@@ -35,17 +30,17 @@ int Doctor::getID() const {
 	return id;
 }
 
-void Doctor::setName(std::string name) {
+void Doctor::setName(const std::string& name) {
 	this->name = name;
 	return;
 }
 
-void Doctor::setSpec(std::string spec) {
+void Doctor::setSpec(const std::string& spec) {
 	speciality = spec;
 	return;
 }
 
-void Doctor::setOffice(std::string office) {
+void Doctor::setOffice(const std::string& office) {
 	this->office = office;
 	return;
 }
@@ -53,7 +48,7 @@ void Doctor::setOffice(std::string office) {
 void Doctor::setAppoint(Appoint* appoint) {
 	appoints.push_back(appoint);
 }
-void Doctor::setID(int id) {
+void Doctor::setID(int& id) {
 	this->id = id;
 	return;
 }
@@ -77,20 +72,20 @@ void Doctor::writeAppoints() {
 	return;
 }
 
-bool Doctor::hasPatient(int num) {
+bool Doctor::hasPatient(int& num) {
 	if (appoints[num]->hasPatient())
 		return true;
 	return false;
 }
 
-void Doctor::setPatient(int num, int patID) {
+void Doctor::setPatient(int& num, int& patID) {
 	if (appoints[num]->hasPatient())
 		return;
 	appoints[num]->setPatID(patID);
 	return;
 }
 
-void Doctor::deleteAppoint(std::vector<Appoint>& appoints, int num) {
+void Doctor::deleteAppoint(std::vector<Appoint>& appoints, int& num) {
 	if (!this->appoints[num])
 		return;
 	Appoint* ptr = this->appoints[num];

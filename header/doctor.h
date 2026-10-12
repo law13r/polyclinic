@@ -9,7 +9,7 @@ private:
 	std::string office;
 	std::vector<Appoint*> appoints;
 public:
-	Doctor(int, const std::string&, const std::string&, const std::string&, std::vector<Appoint*>);
+	Doctor(int, const std::string&, const std::string&, const std::string&, std::vector<Appoint*>&);
 	Doctor(int, const std::string&, const std::string&, const std::string&);
 	explicit Doctor(int);
 
@@ -19,15 +19,15 @@ public:
 	std::vector<Appoint*> getAppoints() const;
 	int getID() const;
 
-	void setName(std::string);
-	void setSpec(std::string);
-	void setOffice(std::string);
+	void setName(const std::string&);
+	void setSpec(const std::string&);
+	void setOffice(const std::string&);
 	void setAppoint(Appoint*);
-	void setID(int);
+	void setID(int&);
 
 	bool hasNoAppoints();
 	void writeAppoints();
-	bool hasPatient(int);
-	void setPatient(int, int);
-	void deleteAppoint(std::vector<Appoint>&, int);
+	bool hasPatient(int&);
+	void setPatient(int&, int&);
+	void deleteAppoint(std::vector<Appoint>&, int&);
 };

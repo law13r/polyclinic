@@ -19,10 +19,10 @@ public:
 	std::string getDate() const;
 	std::string getTime() const;
 
-	void setDocID(int);
-	void setPatID(int);
-	void setDate(const std::string);
-	void setTime(const std::string);
+	void setDocID(int&);
+	void setPatID(int&);
+	void setDate(const std::string&);
+	void setTime(const std::string&);
 
 	bool hasPatient() const;
 };

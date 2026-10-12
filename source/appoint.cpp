@@ -26,23 +26,23 @@ std::string Appoint::getTime() const {
 	return time;
 }
 
-void Appoint::setDocID(int id) {
+void Appoint::setDocID(int& id) {
 	docID = id;
 	return;
 }
 
-void Appoint::setPatID(int id) {
+void Appoint::setPatID(int& id) {
 	patID = id;
 	return;
 }
 
-void Appoint::setDate(const std::string date) {
-	this->date = date;
+void Appoint::setDate(const std::string& nDate) {
+	date = nDate;
 	return;
 }
 
-void Appoint::setTime(const std::string time) {
-	this->time = time;
+void Appoint::setTime(const std::string& nTime) {
+	time = nTime;
 	return;
 }
 
