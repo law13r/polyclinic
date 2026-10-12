@@ -1,10 +1,10 @@
 #include "patient.h"
 #include "appoint.h"
 
-Patient::Patient(int id, const std::string& name, std::string doB, long long phone, std::vector<Appoint*> appoints) : id(id), name(name), doB(doB), phone(phone), appoints(appoints) {
+Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone, std::vector<Appoint*> appoints) : id(id), name(name), doB(doB), phone(phone), appoints(appoints) {
 }
 
-Patient::Patient(int id, const std::string& name, std::string doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
+Patient::Patient(int id, const std::string& name, const std::string& doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
 	appoints = {};
 }
 

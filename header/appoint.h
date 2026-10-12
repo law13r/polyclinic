@@ -10,9 +10,9 @@ private:
 	int docID;
 	std::optional<int> patID;
 public:
-	Appoint(int, int, std::string, std::string);
-	Appoint(int, std::string, std::string);
-	Appoint(int);
+	Appoint(int, int, const std::string&, const std::string&);
+	Appoint(int, const std::string&, const std::string&);
+	explicit Appoint(int);
 
 	int getDocID() const;
 	std::optional<int> getPatID() const;
@@ -21,8 +21,8 @@ public:
 
 	void setDocID(int);
 	void setPatID(int);
-	void setDate(std::string);
-	void setTime(std::string);
+	void setDate(const std::string);
+	void setTime(const std::string);
 
-	bool hasPatient();
+	bool hasPatient() const;
 };
