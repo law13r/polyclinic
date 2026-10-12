@@ -1,79 +1,103 @@
 #include "doctor.h"
+#include "appoint.h"
+
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::vector<Appoint*> appoints) : id(id), name(name), speciality(speciality), office(office), appoints(appoints) {
+}
+
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office) : id(id), name(name), speciality(speciality), office(office) {
+	appoints = {};
+}
 
 Doctor::Doctor(int id) : id(id){
-	set();
+	name = "default";
+	speciality = "default";
+	office = "default";
+	appoints = {};
 }
 
-void Doctor::get() const {
-	std::cout << "Имя врача: " << name << "\tСпециальность: " << speciality << std::endl;
-	std::cout << "Кабинет " << office << std::endl;
+std::string Doctor::getName() const {
+	return name;
+}
+
+std::string Doctor::getSpec() const {
+	return speciality;
+}
+
+std::string Doctor::getOffice() const {
+	return office;
+}
+
+std::vector<Appoint*> Doctor::getAppoints() const {
+	return appoints;
+}
+
+int Doctor::getID() const {
+	return id;
+}
+
+void Doctor::setName(std::string name) {
+	this->name = name;
 	return;
 }
 
-void Doctor::get1() const {
-	int choice;
-	std::cout << "Какую характеристику вывести?" << std::endl;
-	std::cout << "1 - вывести имя" << std::endl;
-	std::cout << "2 - вывести специальность" << std::endl;
-	std::cout << "3 - вывести кабинет" << std::endl;
-	std::cout << "4 - отменить" << std::endl;
-	std::cin >> choice;
-	switch (choice) {
-	case 1:
-		std::cout << "Имя врача: " << name << std::endl;
-		break;
-	case 2:
-		std::cout << "Специальность врача: " << speciality << std::endl;
-		break;
-	case 3:
-		std::cout << "Кабинет врача: " << office << std::endl;
-		break;
-	case 4:
+void Doctor::setSpec(std::string spec) {
+	speciality = spec;
+	return;
+}
+
+void Doctor::setOffice(std::string office) {
+	this->office = office;
+	return;
+}
+
+void Doctor::setAppoint(Appoint* appoint) {
+	appoints.push_back(appoint);
+}
+void Doctor::setID(int id) {
+	this->id = id;
+	return;
+}
+
+bool Doctor::hasNoAppoints() {
+	if (appoints.empty())
+		return true;
+	else
+		return false;
+}
+
+void Doctor::writeAppoints() {
+	int i = 1;
+	if (appoints.empty())
 		return;
-	default:
-		break;
+	for (const auto& appoint : appoints) {
+		std::cout << i++ << ") ";
+		std::cout << appoint->getDate() << ' ';
+		std::cout << appoint->getTime() << '\n';
 	}
 	return;
 }
 
-void Doctor::set() {
-	std::cout << "Введите ФИО врача: ";
-	std::cin.ignore();
-	std::getline(std::cin, name);
-	std::cout << "Введите специальность врача: ";
-	std::cin >> speciality;
-	std::cout << "Введите номер кабинета: ";
-	std::cin >> office;
+bool Doctor::hasPatient(int num) {
+	if (appoints[num]->hasPatient())
+		return true;
+	return false;
 }
 
-void Doctor::set1() {
-	int choice;
-	std::cout << "Какую характеристику ввести?" << std::endl;
-	std::cout << "1 - ввести имя" << std::endl;
-	std::cout << "2 - ввести специальность" << std::endl;
-	std::cout << "3 - ввести кабинет" << std::endl;
-	std::cout << "4 - отменить" << std::endl;
-	do {
-		std::cin >> choice;
-	} while (choice < 1 || choice > 4);
-	switch (choice) {
-	case 1:
-		std::cout << "Введите ФИО врача: ";
-		std::cin.ignore();
-		std::getline(std::cin, name);
-		break;
-	case 2:
-		std::cout << "Введите специальность врача: ";
-		std::cin >> speciality;
-		break;
-	case 3:
-		std::cout << "Введите номер кабинета: ";
-		std::cin >> office;
-		break;
-	case 4:
+void Doctor::setPatient(int num, int patID) {
+	if (appoints[num]->hasPatient())
 		return;
-	default:
-		break;
-	}
+	appoints[num]->setPatID(patID);
+	return;
+}
+
+void Doctor::deleteAppoint(std::vector<Appoint>& appoints, int num) {
+	if (!this->appoints[num])
+		return;
+	Appoint* ptr = this->appoints[num];
+	auto target = std::find_if(appoints.begin(), appoints.end(), [ptr](const Appoint& appoint) {
+		return &appoint == ptr;
+		});
+	if (target != appoints.end())
+		appoints.erase(target);
 	return;
 }

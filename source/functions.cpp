@@ -3,22 +3,20 @@
 #include "doctor.h"
 #include "appoint.h"
 
-void mainMenu() {
+void mainMenu(std::vector<Patient>& patients, std::vector<Doctor>& doctors, std::vector<Appoint>& appoints) {
 	int choice;
-	std::vector<Patient> patients;
-	std::vector<Doctor> doctors;
 	while (true) {
-		std::cout << "\t\t\tПоликлиника\n1 - вход как пациент\n2 - вход как врач\n3 - вход как админ\n4 - выход\n";
+		std::cout << "\t\tPolyclinic\n1 - sign in as patient\n2 - sign in as doctor\n3 - sign in as admin\n4 - quit program\n";
 		std::cin >> choice;
 		switch (choice) {
 		case 1:
-			patientMenu();
+			patientMenu(doctors);
 			break;
 		case 2:
-			doctorMenu();
+			doctorMenu(patients, appoints);
 			break;
 		case 3:
-			adminMenu(patients, doctors);
+			adminMenu(patients, doctors, appoints);
 			break;
 		case 4:
 			return;
@@ -28,25 +26,25 @@ void mainMenu() {
 	}
 }
 
-void patientMenu() {
-	std::cout << "В процессе..." << std::endl;
+void patientMenu(std::vector<Doctor> &doctors) {
+	std::cout << "In progress..." << '\n';
 }
 
-void doctorMenu() {
-	std::cout << "В процессе..." << std::endl;
+void doctorMenu(std::vector<Patient> &patients, std::vector<Appoint> &appoints) {
+	std::cout << "In progress..." << '\n';
 }
 
-void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors) {
+void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std::vector<Appoint> &appoints) {
 	int choice;
 	while (true) {
-		std::cout << "\t\t\tАдмин меню\n1 - вывести список врачей\n2 - вывести список пациентов\n3 - отменить\n";
+		std::cout << "\t\tAdmin menu\n1 - display doctors list\n2 - display patients list\n3 - cancel\n";
 		std::cin >> choice;
 		switch (choice) {
 		case 1:
-			doctorsManagement(doctors);
+			doctorsManagement(doctors, patients, appoints);
 			break;
 		case 2:
-			patientsManagement(patients);
+			patientsManagement(patients, appoints);
 			break;
 		case 3:
 			return;
@@ -55,13 +53,13 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors) {
 		}
 	}
 }
-void doctorsManagement(std::vector<Doctor>& doctors) {
+void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
 	int choice;
 	int choice1;
 	int index;
-	int docID = 0;
+	int docID = static_cast<int>(doctors.size());
 	printDoctors(doctors);
-	std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
+	std::cout << "1 - create new object\n2 - edit existing object\n3 - delete object\n4 - show appointments to doctor\n5 - cancel\n";
 	std::cin >> choice;
 	switch (choice) {
 	case 1: {
@@ -71,40 +69,51 @@ void doctorsManagement(std::vector<Doctor>& doctors) {
 	}
 	case 2:
 		do {
-			std::cout << "Введите номер объекта в списке: ";
+			std::cout << "Enter object number from the list: ";
 			std::cin >> index;
 		} while (index < 1 || index > static_cast<int>(doctors.size()));
 		index--;
 		do {
-			std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
+			std::cout << "Enter the whole profile or a single characteristic?\n1 - whole profile\n2 - single characteristic\n";
 			std::cin >> choice1;
 		} while (choice1 < 1 || choice1 > 2);
 		if (choice1 == 1)
-			doctors[index].set();
+			enter(doctors[index]);
 		else
-			doctors[index].set1();
+			enter1(doctors[index]);
 		break;
 	case 3:
 		do {
-			std::cout << "Введите номер объекта в списке: ";
+			std::cout << "Enter object number from the list: ";
 			std::cin >> index;
 		} while (index < 1 || index > static_cast<int>(doctors.size()));
 		doctors.erase(doctors.begin() + --index);
 		break;
 	case 4:
+		do {
+			std::cout << "Enter object number from the list: ";
+			std::cin >> index;
+		} while (index < 1 || index > static_cast<int>(doctors.size()));
+		if (doctors[index].hasNoAppoints())
+			std::cout << "This doctor does not have appointments." << '\n';
+		else
+			doctors[index].writeAppoints();
+		docAppointManagement(doctors[index], patients, appoints);
+		break;
+	case 5:
 		break;
 	default:
 		break;
 	}
 }
 
-void patientsManagement(std::vector<Patient>& patients) {
+void patientsManagement(std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
 	int choice;
 	int choice1;
 	int index;
-	int patID = 0;
+	int patID = static_cast<int>(patients.size());
 	printPatients(patients);
-	std::cout << "1 - создать новый объект\n2 - редактировать объект\n3 - удалить объект\n4 - отменить\n";
+	std::cout << "1 - create new object\n2 - edit existing object\n3 - delete object\n4 - cancel\n";
 	do {
 		std::cin >> choice;
 	} while (choice < 1 || choice > 4);
@@ -116,22 +125,22 @@ void patientsManagement(std::vector<Patient>& patients) {
 	}
 	case 2:
 		do {
-			std::cout << "Введите номер объекта в списке: ";
+			std::cout << "Enter object number from the list: ";
 			std::cin >> index;
 		} while (index < 1 || index > static_cast<int>(patients.size()));
 		index--;
 		do {
-			std::cout << "Ввести полный профиль или конкретную характеристику?\n1 - полный профиль\n2 - отдельную характеристику\n";
+			std::cout << "Enter the whole profile or a single characteristic?\n1 - whole profile\n2 - single characteristic\n";
 			std::cin >> choice1;
 		} while (choice1 < 1 || choice1 > 2);
 		if (choice1 == 1)
-			patients[index].set();
+			enter(patients[index]);
 		else
-			patients[index].set1();
+			enter1(patients[index]);
 		break;
 	case 3:
 		do {
-			std::cout << "Введите номер объекта в списке: ";
+			std::cout << "Enter object number from the list: ";
 			std::cin >> index;
 		} while (index < 1 || index > static_cast<int>(patients.size()));
 		patients.erase(patients.begin() + --index);
@@ -146,12 +155,14 @@ void patientsManagement(std::vector<Patient>& patients) {
 void printPatients(const std::vector<Patient>& patients) {
 	int i = 0;
 	if (patients.empty()) {
-		std::cout << "Список пуст." << std::endl;
+		std::cout << "List is empty..." << '\n';
 	}
 	else {
 		for (; i < patients.size(); i++) {
 			std::cout << i + 1 << ". ";
-			patients[i].get();
+			std::cout << "Patient name: " << patients[i].getName() << '\n';
+			std::cout << "Date of birth: " << patients[i].getDoB() << '\n';
+			std::cout << "Phone number: " << patients[i].getPhone() << '\n';
 		}
 	}
 	return;
@@ -160,25 +171,257 @@ void printPatients(const std::vector<Patient>& patients) {
 void printDoctors(const std::vector<Doctor>& doctors) {
 	int i = 0;
 	if (doctors.empty()) {
-		std::cout << "Список пуст." << std::endl;
+		std::cout << "List is empty..." << '\n';
 	}
 	else {
 		for (; i < doctors.size(); i++) {
 			std::cout << i + 1 << ". ";
-			doctors[i].get();
+			std::cout << "Doctor name: " << doctors[i].getName() << '\n';
+			std::cout << "Speciality: " << doctors[i].getSpec() << '\n';
+			std::cout << "Office " << doctors[i].getOffice() << '\n';
 		}
 	}
 	return;
 }
 
-int correct(struct date dat) {
-	if (dat.day < 1 || dat.day > 31)
-		return 1;
-	if (dat.day > 30 && ((dat.month % 2 == 1 && dat.month < 8) || (dat.month % 2 == 0 && dat.month > 7)))
-		return 1;
-	if (dat.day > 29 && dat.month == 2)
-		return 1;
-	if (dat.day > 28 && dat.month == 2 && dat.year % 4 == 0)
-		return 1;
-	return 0;
+bool dateisValid(std::string& date) {
+	std::istringstream str{ date };
+	std::chrono::year_month_day ymd;
+	str >> std::chrono::parse("%d.%m.%Y", ymd);
+	return !str.fail() && str.eof() && ymd.ok();
+}
+
+bool timeisValid(std::string& time) {
+	std::istringstream str{ time };
+	int h, m;
+	char c;
+	if (str >> h >> c >> m && c == ':' && str.eof())
+		return h >= 0 && h < 24 && m >= 0 && m < 60;
+	return false;
+}
+
+void write1(const Patient& patient) {
+	int choice;
+	std::cout << "Which characteristic to display?" << '\n';
+	std::cout << "1 - display name" << '\n';
+	std::cout << "2 - display date of birth" << '\n';
+	std::cout << "3 - display phone number" << '\n';
+	std::cout << "4 - cancel" << '\n';
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		std::cout << "Patient name: " << patient.getName() << '\n';
+		break;
+	case 2:
+		std::cout << "Date of birth: " << patient.getDoB() << '\n';
+		break;
+	case 3:
+		std::cout << "Phone number: " << patient.getPhone() << '\n';
+		break;
+	case 4:
+		return;
+	default:
+		break;
+	}
+	return;
+}
+
+void write1(const Doctor& doctor) {
+	int choice;
+	std::cout << "Which characteristic to display?" << '\n';
+	std::cout << "1 - display name" << '\n';
+	std::cout << "2 - display speciality" << '\n';
+	std::cout << "3 - display office" << '\n';
+	std::cout << "4 - cancel" << '\n';
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		std::cout << "Doctor name: " << doctor.getName() << '\n';
+		break;
+	case 2:
+		std::cout << "Speciality: " << doctor.getSpec() << '\n';
+		break;
+	case 3:
+		std::cout << "Office " << doctor.getOffice() << '\n';
+		break;
+	case 4:
+		return;
+	default:
+		break;
+	}
+	return;
+}
+
+void enter1(Patient& patient) {
+	int choice;
+	std::string name;
+	std::string date;
+	long long phone;
+	std::cout << "Which characteristic to enter?" << '\n';
+	std::cout << "1 - enter name" << '\n';
+	std::cout << "2 - enter date of birth" << '\n';
+	std::cout << "3 - enter phone number" << '\n';
+	std::cout << "4 - cancel" << '\n';
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		std::cout << "Enter patient name: ";
+		std::getline(std::cin, name);
+		patient.setName(name);
+		break;
+	case 2:
+		do {
+			std::cout << "Enter date of birth (dd.mm.yyyy): ";
+			std::cin >> date;
+		} while (!dateisValid(date));
+		patient.setDoB(date);
+		break;
+	case 3:
+		std::cout << "Entere phone number (8XXXXXXXXXX): ";
+		std::cin >> phone;
+		patient.setPhone(phone);
+		break;
+	case 4:
+		return;
+	default:
+		break;
+	}
+	return;
+}
+
+void enter1(Doctor& doctor) {
+	int choice;
+	std::string buffer;
+	std::cout << "Which characteristic to enter?" << '\n';
+	std::cout << "1 - enter name" << '\n';
+	std::cout << "2 - enter speciality" << '\n';
+	std::cout << "3 - enter office" << '\n';
+	std::cout << "4 - cancel" << '\n';
+	do {
+		std::cin >> choice;
+	} while (choice < 1 || choice > 4);
+	switch (choice) {
+	case 1:
+		std::cout << "Enter doctor name: ";
+		std::getline(std::cin, buffer);
+		doctor.setName(buffer);
+		break;
+	case 2:
+		std::cout << "Enter speciality: ";
+		std::getline(std::cin, buffer);
+		doctor.setSpec(buffer);
+		break;
+	case 3:
+		std::cout << "Enter office: ";
+		std::getline(std::cin, buffer);
+		doctor.setOffice(buffer);
+		break;
+	case 4:
+		return;
+	default:
+		break;
+	}
+	return;
+}
+
+void enter(Patient& patient) {
+	std::string name;
+	std::string date;
+	long long phone;
+	std::cout << "Enter patient name: ";
+	std::getline(std::cin, name);
+	patient.setName(name);
+	do {
+		std::cout << "Enter date of birth (dd.mm.yyyy): ";
+		std::cin >> date;
+	} while (!dateisValid(date));
+	patient.setDoB(date);
+	std::cout << "Enter phone number (8XXXXXXXXXX): ";
+	std::cin >> phone;
+	patient.setPhone(phone);
+	return;
+}
+
+void enter(Doctor& doctor) {
+	std::string buffer;
+	std::cout << "Enter doctor name: ";
+	std::getline(std::cin, buffer);
+	doctor.setName(buffer);
+	std::cout << "Enter speciality: ";
+	std::getline(std::cin, buffer);
+	doctor.setSpec(buffer);
+	std::cout << "Enter office: ";
+	std::getline(std::cin, buffer);
+	doctor.setOffice(buffer);
+}
+
+void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
+	int choice;
+	int num;
+	int patID;
+	while (true) {
+		doctor.writeAppoints();
+		std::cout << "1 - add appointment\n2 - add patient to appointment\n3 - delete appointment\n4 - cancel\n";
+		std::cin >> choice;
+		switch (choice) {
+		case 1:
+			appoints.push_back(addAppoint(doctor));
+			doctor.setAppoint(&appoints.back());
+			break;
+		case 2:
+			do {
+				std::cout << "Enter number of the appointment from the list: ";
+				std::cin >> num;
+			} while (num > patients.size());
+			num--;
+			if (doctor.hasPatient(num)) {
+				std::cout << "This appointment is occupied.\n";
+				break;
+			}
+			do {
+				std::cout << "Enter patient ID: ";
+				std::cin >> patID;
+			} while (!patientExist(patients, patID));
+			doctor.setPatient(num, patID);
+			break;
+		case 3:
+			do {
+				std::cout << "Enter number of the appointment from the list: ";
+				std::cin >> num;
+			} while (num > patients.size());
+			num--;
+			doctor.deleteAppoint(appoints, num);
+			break;
+		case 4:
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+Appoint addAppoint(Doctor& doctor) {
+	Appoint newAppoint{ doctor.getID() };
+	std::string date;
+	std::string time;
+	do {
+		std::cout << "Enter date of the appointment (dd.mm.yyyy): ";
+		std::cin >> date;
+	} while (!dateisValid(date));
+	newAppoint.setDate(date);
+	do {
+		std::cout << "Enter time of the appointment (hh:mm): ";
+		std::cin >> time;
+	} while (!timeisValid(time));
+	newAppoint.setTime(time);
+	return newAppoint;
+}
+
+bool patientExist(std::vector<Patient>& patients, int id) {
+	auto target = std::find_if(patients.begin(), patients.end(), [id](const Patient patient) {
+		return patient.getID() == id;
+		});
+	if (target != patients.end())
+		return true;
+	return false;
 }

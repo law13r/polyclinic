@@ -1,86 +1,61 @@
 #include "patient.h"
+#include "appoint.h"
 
-Patient::Patient(int id, const std::string& name, struct date doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
+Patient::Patient(int id, const std::string& name, std::string doB, long long phone, std::vector<Appoint*> appoints) : id(id), name(name), doB(doB), phone(phone), appoints(appoints) {
+}
+
+Patient::Patient(int id, const std::string& name, std::string doB, long long phone) : id(id), name(name), doB(doB), phone(phone) {
+	appoints = {};
 }
 
 Patient::Patient(int id) : id(id) {
-	set();
+	name = "default";
+	doB = "default";
+	phone = 0;
+	appoints = {};
 }
 
-void Patient::get() const {
-	std::cout << "Имя пациента: " << name << "\tДата рождения: " << doB.day << "." << doB.month << "." << doB.year << std::endl;
-	std::cout << "Номер телефона: " << phone << std::endl;
+std::string Patient::getName() const {
+	return name;
+}
+
+std::string Patient::getDoB() const{
+	return doB;
+}
+
+long long Patient::getPhone() const {
+	return phone;
+}
+
+std::vector<Appoint*> Patient::getAppoints() const {
+	return appoints;
+}
+
+int Patient::getID() const {
+	return id;
+}
+
+void Patient::setName(std::string name) {
+	this->name = name;
 	return;
 }
 
-void Patient::get1() const {
-	int choice;
-	std::cout << "Какую характеристику вывести?" << std::endl;
-	std::cout << "1 - вывести имя" << std::endl;
-	std::cout << "2 - вывести дату рождения" << std::endl;
-	std::cout << "3 - вывести номер телефона" << std::endl;
-	std::cout << "4 - отменить" << std::endl;
-	std::cin >> choice;
-	switch (choice) {
-	case 1:
-		std::cout << "Имя пациента: " << name << std::endl;
-		break;
-	case 2:
-		std::cout << "Дата рождения пациента: " << doB.day << "." << doB.month << "." << doB.year << std::endl;
-		break;
-	case 3:
-		std::cout << "Номер телефона: " << phone << std::endl;
-		break;
-	case 4:
-		return;
-	default:
-		break;
-	}
+void Patient::setDoB(std::string doB) {
+	this->doB = doB;
 	return;
 }
 
-void Patient::set() {
-	std::cout << "Введите ФИО пациента: ";
-	std::cin.ignore();
-	std::getline(std::cin, name);
-	std::cout << "Введите дату рождения пациента (дд мм гггг): ";
-	do {
-		std::cin >> doB.day;
-		std::cin >> doB.month;
-		std::cin >> doB.year;
-	} while (correct(this->doB) != 0);
-	std::cout << "Введите номер телефона пациента в формате 8XXXXXXXXXX: ";
-	std::cin >> phone;
+void Patient::setPhone(long long phone) {
+	this->phone = phone;
+	return;
 }
 
-void Patient::set1() {
-	int choice;
-	std::cout << "Какую характеристику ввести?" << std::endl;
-	std::cout << "1 - ввести имя" << std::endl;
-	std::cout << "2 - ввести дату рождения" << std::endl;
-	std::cout << "3 - ввести номер телефона" << std::endl;
-	std::cout << "4 - отменить" << std::endl;
-	std::cin >> choice;
-	switch (choice) {
-	case 1:
-		std::cout << "Введите ФИО пациента: ";
-		std::cin.ignore();
-		std::getline(std::cin, name);
-		break;
-	case 2:
-		std::cout << "Введите дату рождения пациента (дд мм гггг): ";
-		std::cin >> doB.day;
-		std::cin >> doB.month;
-		std::cin >> doB.year;
-		break;
-	case 3:
-		std::cout << "Введите номер телефона пациента в формате 8XXXXXXXXXX: ";
-		std::cin >> phone;
-		break;
-	case 4:
-		return;
-	default:
-		break;
-	}
+void Patient::setAppoint(Appoint* appoint) {
+	appoints.push_back(appoint);
+	return;
+}
+
+void Patient::setID(int id) {
+	this->id = id;
 	return;
 }
