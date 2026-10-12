@@ -20,7 +20,7 @@ void patientsManagement(std::vector<Patient>&);
 void printPatients(const std::vector<Patient>&);
 void printDoctors(const std::vector<Doctor>&);
 bool dateisValid(std::string&);
-bool timeisValid(std::string&);
+bool timeisValid(const std::string&);
 void write1(const Patient&);
 void write1(const Doctor&);
 void enter1(Patient&);

@@ -19,15 +19,15 @@ public:
 	std::vector<Appoint*> getAppoints() const;
 	int getID() const;
 
-	void setName(const std::string&);
-	void setSpec(const std::string&);
-	void setOffice(const std::string&);
+	void setName(std::string_view);
+	void setSpec(std::string_view);
+	void setOffice(std::string_view);
 	void setAppoint(Appoint*);
 	void setID(const int&);
 
 	bool hasNoAppoints() const;
 	void writeAppoints() const;
-	bool hasPatient(int&);
-	void setPatient(int&, int&);
-	void deleteAppoint(std::vector<Appoint>&, int&);
+	bool hasPatient(const int&);
+	void setPatient(const int&, const int&);
+	void deleteAppoint(std::vector<Appoint>&, const int&);
 };

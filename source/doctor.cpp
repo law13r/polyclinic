@@ -30,17 +30,17 @@ int Doctor::getID() const {
 	return id;
 }
 
-void Doctor::setName(const std::string& nName) {
+void Doctor::setName(std::string_view nName) {
 	name = nName;
 	return;
 }
 
-void Doctor::setSpec(const std::string& spec) {
+void Doctor::setSpec(std::string_view spec) {
 	speciality = spec;
 	return;
 }
 
-void Doctor::setOffice(const std::string& nOffice) {
+void Doctor::setOffice(std::string_view nOffice) {
 	office = nOffice;
 	return;
 }
@@ -74,27 +74,26 @@ void Doctor::writeAppoints() const {
 	return;
 }
 
-bool Doctor::hasPatient(int& num) {
+bool Doctor::hasPatient(const int& num) {
 	if (appoints[num]->hasPatient())
 		return true;
 	return false;
 }
 
-void Doctor::setPatient(int& num, int& patID) {
+void Doctor::setPatient(const int& num, const int& patID) {
 	if (appoints[num]->hasPatient())
 		return;
 	appoints[num]->setPatID(patID);
 	return;
 }
 
-void Doctor::deleteAppoint(std::vector<Appoint>& appoints, int& num) {
-	if (!this->appoints[num])
+void Doctor::deleteAppoint(std::vector<Appoint>& list, const int& num) {
+	if (!appoints[num])
 		return;
-	Appoint* ptr = this->appoints[num];
-	auto target = std::find_if(appoints.begin(), appoints.end(), [ptr](const Appoint& appoint) {
+	const Appoint* ptr = appoints[num];
+	if (auto target = std::ranges::find_if(list, [ptr](const Appoint& appoint) {
 		return &appoint == ptr;
-		});
-	if (target != appoints.end())
-		appoints.erase(target);
+		}); target != list.end())
+		list.erase(target);
 	return;
 }

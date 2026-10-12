@@ -191,11 +191,10 @@ bool dateisValid(std::string& date) {
 	return !str.fail() && str.eof() && ymd.ok();
 }
 
-bool timeisValid(std::string& time) {
+bool timeisValid(const std::string& time) {
 	std::istringstream str{ time };
-	int h, m;
-	char c;
-	if (str >> h >> c >> m && c == ':' && str.eof())
+	int h = 0, m = 0;
+	if (char c = 0; str >> h >> c >> m && c == ':' && str.eof())
 		return h >= 0 && h < 24 && m >= 0 && m < 60;
 	return false;
 }
@@ -418,10 +417,9 @@ Appoint addAppoint(Doctor& doctor) {
 }
 
 bool patientExist(std::vector<Patient>& patients, int id) {
-	auto target = std::find_if(patients.begin(), patients.end(), [id](const Patient& patient) {
+	if (auto target = std::ranges::find_if(patients, [id](const Patient& patient) {
 		return patient.getID() == id;
-		});
-	if (target != patients.end())
+		}); target != patients.end())
 		return true;
 	return false;
 }
