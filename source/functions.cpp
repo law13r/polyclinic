@@ -193,7 +193,8 @@ bool dateisValid(std::string& date) {
 
 bool timeisValid(const std::string& time) {
 	std::istringstream str{ time };
-	int h = 0, m = 0;
+	int h = 0;
+	int m = 0;
 	if (char c = 0; str >> h >> c >> m && c == ':' && str.eof())
 		return h >= 0 && h < 24 && m >= 0 && m < 60;
 	return false;
