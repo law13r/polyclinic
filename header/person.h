@@ -2,7 +2,7 @@
 #include "lab.h"
 
 class Person {
-protected:
+private:
 	int id;
 	std::string name;
 	std::string phone;
@@ -38,4 +38,8 @@ public:
 	}
 	Person& operator+=(Appoint* appoint);
 	Person& operator-=(Appoint* appoint);
+
+	friend class Doctor;
+	friend class Nurse;
+	friend class Patient;
 };
