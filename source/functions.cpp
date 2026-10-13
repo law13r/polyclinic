@@ -184,7 +184,7 @@ void printDoctors(const std::vector<Doctor>& doctors) {
 	return;
 }
 
-bool dateisValid(std::string& date) {
+bool dateisValid(const std::string& date) {
 	std::istringstream str{ date };
 	std::chrono::year_month_day ymd;
 	str >> std::chrono::parse("%d.%m.%Y", ymd);
@@ -256,7 +256,7 @@ void enter1(Patient& patient) {
 	int choice;
 	std::string name;
 	std::string date;
-	long long phone;
+	std::string phone;
 	std::cout << "Which characteristic to enter?" << '\n';
 	std::cout << "1 - enter name" << '\n';
 	std::cout << "2 - enter date of birth" << '\n';
@@ -277,8 +277,10 @@ void enter1(Patient& patient) {
 		patient.setDoB(date);
 		break;
 	case 3:
-		std::cout << "Entere phone number (8XXXXXXXXXX): ";
-		std::cin >> phone;
+		do {
+			std::cout << "Entere phone number (8XXXXXXXXXX): ";
+			std::cin >> phone;
+		} while (!phoneisValid(phone));
 		patient.setPhone(phone);
 		break;
 	case 4:
@@ -327,7 +329,7 @@ void enter1(Doctor& doctor) {
 void enter(Patient& patient) {
 	std::string name;
 	std::string date;
-	long long phone;
+	std::string phone;
 	std::cout << "Enter patient name: ";
 	std::getline(std::cin, name);
 	patient.setName(name);
@@ -336,8 +338,10 @@ void enter(Patient& patient) {
 		std::cin >> date;
 	} while (!dateisValid(date));
 	patient.setDoB(date);
-	std::cout << "Enter phone number (8XXXXXXXXXX): ";
-	std::cin >> phone;
+	do {
+		std::cout << "Enter phone number (8XXXXXXXXXX): ";
+		std::getline(std::cin, phone);
+	} while (!phoneisValid(phone));
 	patient.setPhone(phone);
 	return;
 }
@@ -366,7 +370,7 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 		switch (choice) {
 		case 1:
 			appoints.push_back(addAppoint(doctor));
-			doctor.setAppoint(&appoints.back());
+			doctor += &appoints.back();
 			break;
 		case 2:
 			do {
@@ -382,7 +386,10 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 				std::cout << "Enter patient ID: ";
 				std::cin >> patID;
 			} while (!patientExist(patients, patID));
-			doctor.setPatient(num, patID);
+			if (auto patientOpt = findPatient(patients, patID); patientOpt.has_value())
+				doctor.setPatient(num, patientOpt.value());
+			else
+				std::cout << "Unexpected error: user with such ID does not exist.\n";
 			break;
 		case 3:
 			do {
@@ -390,7 +397,7 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 				std::cin >> num;
 			} while (num > patients.size());
 			num--;
-			doctor.deleteAppoint(appoints, num);
+			doctor.delAppoint(appoints, num);
 			break;
 		case 4:
 			return;
@@ -401,19 +408,13 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 }
 
 Appoint addAppoint(Doctor& doctor) {
-	Appoint newAppoint{ doctor.getID() };
-	std::string date;
-	std::string time;
+	Appoint newAppoint{ doctor };
 	do {
-		std::cout << "Enter date of the appointment (dd.mm.yyyy): ";
-		std::cin >> date;
-	} while (!dateisValid(date));
-	newAppoint.setDate(date);
-	do {
-		std::cout << "Enter time of the appointment (hh:mm): ";
-		std::cin >> time;
-	} while (!timeisValid(time));
-	newAppoint.setTime(time);
+		std::cin.ignore(std::numeric_limits < std::streamsize>::max(), '\n');
+		std::cin.clear();
+		std::cout << "Enter date (dd.mm.yyyy) and time (hh:mm) of the appointment: ";
+		std::cin >> newAppoint;
+	} while (!dateisValid(newAppoint.getDate()) || !timeisValid(newAppoint.getTime()));
 	return newAppoint;
 }
 
@@ -423,4 +424,20 @@ bool patientExist(std::vector<Patient>& patients, int id) {
 		}); target != patients.end())
 		return true;
 	return false;
+}
+
+std::optional<Patient> findPatient(std::vector<Patient>& patients, int id) {
+	if (auto target = std::ranges::find_if(patients, [id](const Patient& patient) {
+		return patient.getID() == id;
+		}); target != patients.end())
+		return *target;
+	return std::nullopt;
+}
+
+bool phoneisValid(std::string_view phone) {
+	if (phone.length() != 12)
+		return false;
+	if (phone[0] != 8)
+		return false;
+	return true;
 }

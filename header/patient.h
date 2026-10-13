@@ -1,27 +1,16 @@
 #pragma once
 #include "lab.h"
+#include "person.h"
 
-class Patient {
+class Patient : public Person {
 private:
-	int id;
-	std::string name;
 	std::string doB;
-	long long phone;
-	std::vector<Appoint*> appoints;
 public:
-	Patient(int, const std::string&, const std::string&, long long, const std::vector<Appoint*>&);
-	Patient(int, const std::string&, const std::string&, long long);
+	Patient(int, const std::string&, const std::string&, std::string_view, const std::vector<Appoint*>&);
+	Patient(int, const std::string&, const std::string&, std::string_view);
 	explicit Patient(int);
 
-	std::string getName() const;
 	std::string getDoB() const;
-	long long getPhone() const;
-	std::vector<Appoint*> getAppoints() const;
-	int getID() const;
 
-	void setName(std::string_view);
 	void setDoB(std::string_view);
-	void setPhone(const long long&);
-	void setAppoint(Appoint*);
-	void setID(const int&);
 };

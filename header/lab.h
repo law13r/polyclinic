@@ -6,10 +6,13 @@
 #include <optional>
 #include <sstream>
 #include <chrono>
+#include <algorithm>
 
-class Patient;
-class Doctor;
 class Appoint;
+class Person;
+class Doctor;
+class Nurse;
+class Patient;
 
 void mainMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
 void patientMenu();
@@ -19,7 +22,7 @@ void doctorsManagement(std::vector<Doctor>&, std::vector<Patient>&, std::vector<
 void patientsManagement(std::vector<Patient>&);
 void printPatients(const std::vector<Patient>&);
 void printDoctors(const std::vector<Doctor>&);
-bool dateisValid(std::string&);
+bool dateisValid(const std::string&);
 bool timeisValid(const std::string&);
 void write1(const Patient&);
 void write1(const Doctor&);
@@ -30,3 +33,5 @@ void enter(Doctor&);
 void docAppointManagement(Doctor&, std::vector<Patient>&, std::vector<Appoint>&);
 Appoint addAppoint(Doctor&);
 bool patientExist(std::vector<Patient>&, int);
+std::optional<Patient> findPatient(std::vector<Patient>&, int);
+bool phoneisValid(std::string_view);

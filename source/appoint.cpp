@@ -1,21 +1,21 @@
 #include "appoint.h"
 
-Appoint::Appoint(int docID, int patID, const std::string& date, const std::string& time) : date(date), time(time), docID(docID), patID(patID) {
+Appoint::Appoint(Doctor& doctor, Patient& patient, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor), patient(patient) {
 }
 
-Appoint::Appoint(int docID, const std::string& date, const std::string& time) : date(date), time(time), docID(docID) {
+Appoint::Appoint(Doctor& doctor, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor) {
 }
 
-Appoint::Appoint(int docID) : date("default"), time("default"), docID(docID) {
+Appoint::Appoint(Doctor& doctor) : date("default"), time("default"), doctor(doctor) {
 	return;
 }
 
-int Appoint::getDocID() const {
-	return docID;
+Doctor Appoint::getDoctor() const {
+	return doctor;
 }
 
-std::optional<int> Appoint::getPatID() const {
-	return patID;
+std::optional<Patient> Appoint::getPatient() const {
+	return patient;
 }
 
 std::string Appoint::getDate() const {
@@ -26,28 +26,38 @@ std::string Appoint::getTime() const {
 	return time;
 }
 
-void Appoint::setDocID(const int& id) {
-	docID = id;
+void Appoint::setDoctor(const Doctor& doc) {
+	doctor = doc;
 	return;
 }
 
-void Appoint::setPatID(const int& id) {
-	patID = id;
+void Appoint::setPatient(const Patient& pat) {
+	patient = pat;;
 	return;
 }
 
-void Appoint::setDate(std::string_view nDate) {
-	date = nDate;
+void Appoint::setDate(std::string_view dateNew) {
+	date = dateNew;
 	return;
 }
 
-void Appoint::setTime(std::string_view nTime) {
-	time = nTime;
+void Appoint::setTime(std::string_view timeNew) {
+	time = timeNew;
 	return;
 }
 
 bool Appoint::hasPatient() const {
-	if (patID.has_value())
+	if (patient.has_value())
 		return true;
 	return false;
+}
+
+std::ostream& operator<<(std::ostream& os, const Appoint& appoint) {
+	os << appoint.date << ' ' << appoint.time;
+	return os;
+}
+
+std::istream& operator>>(std::istream& is, Appoint& appoint) {
+	is >> appoint.date >> appoint.time;
+	return is;
 }
