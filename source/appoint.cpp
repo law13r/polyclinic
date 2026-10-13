@@ -1,12 +1,12 @@
 #include "appoint.h"
 
-Appoint::Appoint(Doctor& doctor, Patient& patient, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor), patient(patient) {
+Appoint::Appoint(const Doctor& doctor, Patient& patient, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor), patient(patient) {
 }
 
-Appoint::Appoint(Doctor& doctor, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor) {
+Appoint::Appoint(const Doctor& doctor, const std::string& date, const std::string& time) : date(date), time(time), doctor(doctor) {
 }
 
-Appoint::Appoint(Doctor& doctor) : date("default"), time("default"), doctor(doctor) {
+Appoint::Appoint(const Doctor& doctor) : date("default"), time("default"), doctor(doctor) {
 	return;
 }
 
@@ -32,7 +32,7 @@ void Appoint::setDoctor(const Doctor& doc) {
 }
 
 void Appoint::setPatient(const Patient& pat) {
-	patient = pat;;
+	patient = pat;
 	return;
 }
 
@@ -50,14 +50,4 @@ bool Appoint::hasPatient() const {
 	if (patient.has_value())
 		return true;
 	return false;
-}
-
-std::ostream& operator<<(std::ostream& os, const Appoint& appoint) {
-	os << appoint.date << ' ' << appoint.time;
-	return os;
-}
-
-std::istream& operator>>(std::istream& is, Appoint& appoint) {
-	is >> appoint.date >> appoint.time;
-	return is;
 }

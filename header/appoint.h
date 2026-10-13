@@ -10,9 +10,9 @@ private:
 	Doctor doctor;
 	std::optional<Patient> patient;
 public:
-	Appoint(Doctor&, Patient&, const std::string&, const std::string&);
-	Appoint(Doctor&, const std::string&, const std::string&);
-	explicit Appoint(Doctor&);
+	Appoint(const Doctor&, Patient&, const std::string&, const std::string&);
+	Appoint(const Doctor&, const std::string&, const std::string&);
+	explicit Appoint(const Doctor&);
 
 	Doctor getDoctor() const;
 	std::optional<Patient> getPatient() const;
@@ -26,6 +26,13 @@ public:
 
 	bool hasPatient() const;
 
-	friend std::ostream& operator<<(std::ostream&, const Appoint&);
-	friend std::istream& operator>>(std::istream&, Appoint&);
+	friend std::ostream& operator<<(std::ostream& os, const Appoint& appoint) {
+		os << appoint.date << ' ' << appoint.time;
+		return os;
+	}
+
+	friend std::istream& operator>>(std::istream& is, Appoint& appoint) {
+		is >> appoint.date >> appoint.time;
+		return is;
+	}
 };

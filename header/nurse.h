@@ -12,7 +12,7 @@ public:
 	Nurse(int, std::string_view, std::string_view, std::string_view, const Doctor&);
 	Nurse(int, std::string_view, std::string_view, std::string_view, const std::vector<Appoint*>&);
 	Nurse(int, std::string_view, std::string_view, std::string_view);
-	Nurse(int);
+	explicit Nurse(int);
 
 	std::string getOffice() const;
 	std::optional<Doctor> getDoctor() const;

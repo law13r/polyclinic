@@ -2,7 +2,7 @@
 #include "person.h"
 #include "appoint.h"
 
-Person::Person(int id, std::string_view name, std::string_view phone, std::vector<Appoint*> appoints) : id(id), name(name), phone(phone), appoints(appoints) {}
+Person::Person(int id, std::string_view name, std::string_view phone, const std::vector<Appoint*>& appoints) : id(id), name(name), phone(phone), appoints(appoints) {}
 
 Person::Person(int id, std::string_view name, std::string_view phone) : id(id), name(name), phone(phone) {}
 
@@ -70,17 +70,6 @@ void Person::delAppoint(std::vector<Appoint>& list, const int& num) {
 		list.erase(target);
 	*this -= ptr;
 	return;
-}
-
-std::ostream& operator<<(std::ostream& os, const Person& person) {
-	os << "Name: " << person.name << " Phone: " << person.phone;
-	return os;
-}
-
-std::istream& operator>>(std::istream& is, Person& person) {
-	if (std::getline(is >> std::ws, person.name))
-		is >> person.phone;
-	return is;
 }
 
 Person& Person::operator+=(Appoint* appoint) {
