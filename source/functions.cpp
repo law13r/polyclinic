@@ -290,7 +290,7 @@ void enter1(std::shared_ptr<Patient>& patient) {
 	return;
 }
 
-void enter1(std::shared_ptr<Doctor>& doctor) {
+void enter1(const std::shared_ptr<Doctor>& doctor) {
 	int choice;
 	std::string buffer;
 	std::cout << "Which characteristic to enter?" << '\n';
@@ -351,7 +351,7 @@ void enter(std::shared_ptr<Patient>& patient) {
 	return;
 }
 
-void enter(std::shared_ptr<Doctor>& doctor) {
+void enter(const std::shared_ptr<Doctor>& doctor) {
 	std::string buffer;
 	std::cout << "Enter doctor name: ";
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

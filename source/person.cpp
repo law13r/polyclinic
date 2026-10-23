@@ -63,8 +63,7 @@ void Person::delAppoint(std::vector<std::shared_ptr<Appoint>>& list, int num) {
 		return;
 	auto target = appoints[num];
 	appoints.erase(appoints.begin() + num);
-	auto it = std::find(list.begin(), list.end(), target);
-	if (it != list.end())
+	if (auto it = std::ranges::find(list, target); it != list.end())
 		list.erase(it);
 	return;
 }
