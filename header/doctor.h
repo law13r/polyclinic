@@ -7,7 +7,7 @@ private:
 	std::string speciality;
 	std::string office;
 public:
-	Doctor(int, const std::string&, const std::string&, const std::string&, std::string_view, const std::vector<Appoint*>&);
+	Doctor(int, const std::string&, const std::string&, const std::string&, std::string_view, const std::vector<std::shared_ptr<Appoint>>&);
 	Doctor(int, const std::string&, const std::string&, const std::string&, std::string_view);
 	explicit Doctor(int);
 
@@ -18,5 +18,5 @@ public:
 	void setOffice(std::string_view);
 
 	bool hasPatient(const int&);
-	void setPatient(const int&, const Patient&);
+	void setPatient(const int&, std::shared_ptr<Patient>);
 };

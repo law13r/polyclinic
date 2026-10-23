@@ -6,20 +6,20 @@
 class Nurse : public Person {
 private:
 	std::string office;
-	std::optional<Doctor> connectedDoc;
+	std::weak_ptr<Doctor> connectedDoc;
 public:
-	Nurse(int, std::string_view, std::string_view, std::string_view, const Doctor&, const std::vector<Appoint*>&);
-	Nurse(int, std::string_view, std::string_view, std::string_view, const Doctor&);
-	Nurse(int, std::string_view, std::string_view, std::string_view, const std::vector<Appoint*>&);
+	Nurse(int, std::string_view, std::string_view, std::string_view, std::shared_ptr<Doctor>, const std::vector<std::shared_ptr<Appoint>>&);
+	Nurse(int, std::string_view, std::string_view, std::string_view, std::shared_ptr<Doctor>);
+	Nurse(int, std::string_view, std::string_view, std::string_view, const std::vector<std::shared_ptr<Appoint>>&);
 	Nurse(int, std::string_view, std::string_view, std::string_view);
 	explicit Nurse(int);
 
 	std::string getOffice() const;
-	std::optional<Doctor> getDoctor() const;
+	std::shared_ptr<Doctor> getDoctor() const;
 
 	void setOffice(std::string_view);
-	void setDoctor(const Doctor&);
+	void setDoctor(std::shared_ptr<Doctor>);
 
 	bool hasDoctor() const;
-	void setPatient(const int&, const Patient&);
+	void setPatient(const int&, std::shared_ptr<Patient>);
 };

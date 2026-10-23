@@ -1,7 +1,7 @@
 #include "doctor.h"
 #include "appoint.h"
 
-Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::string_view phone, const std::vector<Appoint*>& appoints) : Person(id, name, phone, appoints), speciality(speciality), office(office) {
+Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::string_view phone, const std::vector<std::shared_ptr<Appoint>>& appoints) : Person(id, name, phone, appoints), speciality(speciality), office(office) {
 }
 
 Doctor::Doctor(int id, const std::string& name, const std::string& speciality, const std::string& office, std::string_view phone) : Person(id, name, phone), speciality(speciality), office(office) {
@@ -34,8 +34,8 @@ bool Doctor::hasPatient(const int& num) {
 	return false;
 }
 
-void Doctor::setPatient(const int& num, const Patient& patient) {
-	if (appoints[num]->hasPatient())
+void Doctor::setPatient(const int& num, std::shared_ptr<Patient> patient) {
+	if (num < 0 || num >= appoints.size() || appoints[num]->hasPatient())
 		return;
 	appoints[num]->setPatient(patient);
 	return;

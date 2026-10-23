@@ -3,7 +3,7 @@
 #include "doctor.h"
 #include "appoint.h"
 
-void mainMenu(std::vector<Patient>& patients, std::vector<Doctor>& doctors, std::vector<Appoint>& appoints) {
+void mainMenu(std::vector<std::shared_ptr<Patient>>& patients, std::vector<std::shared_ptr<Doctor>>& doctors, std::vector<std::shared_ptr<Appoint>>& appoints) {
 	int choice;
 	while (true) {
 		std::cout << "\t\tPolyclinic\n1 - sign in as patient\n2 - sign in as doctor\n3 - sign in as admin\n4 - quit program\n";
@@ -34,7 +34,7 @@ void doctorMenu() {
 	std::cout << "In progress..." << '\n';
 }
 
-void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std::vector<Appoint> &appoints) {
+void adminMenu(std::vector<std::shared_ptr<Patient>> &patients, std::vector<std::shared_ptr<Doctor>> &doctors, std::vector<std::shared_ptr<Appoint>> &appoints) {
 	int choice;
 	while (true) {
 		std::cout << "\t\tAdmin menu\n1 - display doctors list\n2 - display patients list\n3 - cancel\n";
@@ -53,7 +53,7 @@ void adminMenu(std::vector<Patient> &patients, std::vector<Doctor> &doctors, std
 		}
 	}
 }
-void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
+void doctorsManagement(std::vector<std::shared_ptr<Doctor>>& doctors, std::vector<std::shared_ptr<Patient>>& patients, std::vector<std::shared_ptr<Appoint>>& appoints) {
 	int choice;
 	int choice1;
 	int index;
@@ -63,7 +63,7 @@ void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patie
 	std::cin >> choice;
 	switch (choice) {
 	case 1: {
-		Doctor docNew(docID++);
+		auto docNew = std::make_shared<Doctor>(docID++);
 		doctors.push_back(docNew);
 		break;
 	}
@@ -94,10 +94,6 @@ void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patie
 			std::cout << "Enter object number from the list: ";
 			std::cin >> index;
 		} while (index < 1 || index > static_cast<int>(doctors.size()));
-		if (doctors[index].hasNoAppoints())
-			std::cout << "This doctor does not have appointments." << '\n';
-		else
-			doctors[index].writeAppoints();
 		docAppointManagement(doctors[index], patients, appoints);
 		break;
 	case 5:
@@ -107,7 +103,7 @@ void doctorsManagement(std::vector<Doctor>& doctors, std::vector<Patient>& patie
 	}
 }
 
-void patientsManagement(std::vector<Patient>& patients) {
+void patientsManagement(std::vector<std::shared_ptr<Patient>>& patients) {
 	int choice;
 	int choice1;
 	int index;
@@ -119,7 +115,7 @@ void patientsManagement(std::vector<Patient>& patients) {
 	} while (choice < 1 || choice > 4);
 	switch (choice) {
 	case 1: {
-		Patient patNew(patID++);
+		auto patNew = std::make_shared<Patient>(patID++);
 		patients.push_back(patNew);
 		break;
 	}
@@ -152,7 +148,7 @@ void patientsManagement(std::vector<Patient>& patients) {
 	}
 }
 
-void printPatients(const std::vector<Patient>& patients) {
+void printPatients(const std::vector<std::shared_ptr<Patient>>& patients) {
 	int i = 0;
 	if (patients.empty()) {
 		std::cout << "List is empty..." << '\n';
@@ -160,15 +156,15 @@ void printPatients(const std::vector<Patient>& patients) {
 	else {
 		for (; i < patients.size(); i++) {
 			std::cout << i + 1 << ". ";
-			std::cout << "Patient name: " << patients[i].getName() << '\n';
-			std::cout << "Date of birth: " << patients[i].getDoB() << '\n';
-			std::cout << "Phone number: " << patients[i].getPhone() << '\n';
+			std::cout << "Patient name: " << patients[i]->getName() << '\n';
+			std::cout << "Date of birth: " << patients[i]->getDoB() << '\n';
+			std::cout << "Phone number: " << patients[i]->getPhone() << '\n';
 		}
 	}
 	return;
 }
 
-void printDoctors(const std::vector<Doctor>& doctors) {
+void printDoctors(const std::vector<std::shared_ptr<Doctor>>& doctors) {
 	int i = 0;
 	if (doctors.empty()) {
 		std::cout << "List is empty..." << '\n';
@@ -176,9 +172,9 @@ void printDoctors(const std::vector<Doctor>& doctors) {
 	else {
 		for (; i < doctors.size(); i++) {
 			std::cout << i + 1 << ". ";
-			std::cout << "Doctor name: " << doctors[i].getName() << '\n';
-			std::cout << "Speciality: " << doctors[i].getSpec() << '\n';
-			std::cout << "Office " << doctors[i].getOffice() << '\n';
+			std::cout << "Doctor name: " << doctors[i]->getName() << '\n';
+			std::cout << "Speciality: " << doctors[i]->getSpec() << '\n';
+			std::cout << "Office " << doctors[i]->getOffice() << '\n';
 		}
 	}
 	return;
@@ -200,7 +196,7 @@ bool timeisValid(const std::string& time) {
 	return false;
 }
 
-void write1(const Patient& patient) {
+void write1(const std::shared_ptr<Patient>& patient) {
 	int choice;
 	std::cout << "Which characteristic to display?" << '\n';
 	std::cout << "1 - display name" << '\n';
@@ -210,13 +206,13 @@ void write1(const Patient& patient) {
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
-		std::cout << "Patient name: " << patient.getName() << '\n';
+		std::cout << "Patient name: " << patient->getName() << '\n';
 		break;
 	case 2:
-		std::cout << "Date of birth: " << patient.getDoB() << '\n';
+		std::cout << "Date of birth: " << patient->getDoB() << '\n';
 		break;
 	case 3:
-		std::cout << "Phone number: " << patient.getPhone() << '\n';
+		std::cout << "Phone number: " << patient->getPhone() << '\n';
 		break;
 	case 4:
 		return;
@@ -226,7 +222,7 @@ void write1(const Patient& patient) {
 	return;
 }
 
-void write1(const Doctor& doctor) {
+void write1(const std::shared_ptr<Doctor>& doctor) {
 	int choice;
 	std::cout << "Which characteristic to display?" << '\n';
 	std::cout << "1 - display name" << '\n';
@@ -236,13 +232,13 @@ void write1(const Doctor& doctor) {
 	std::cin >> choice;
 	switch (choice) {
 	case 1:
-		std::cout << "Doctor name: " << doctor.getName() << '\n';
+		std::cout << "Doctor name: " << doctor->getName() << '\n';
 		break;
 	case 2:
-		std::cout << "Speciality: " << doctor.getSpec() << '\n';
+		std::cout << "Speciality: " << doctor->getSpec() << '\n';
 		break;
 	case 3:
-		std::cout << "Office " << doctor.getOffice() << '\n';
+		std::cout << "Office " << doctor->getOffice() << '\n';
 		break;
 	case 4:
 		return;
@@ -252,7 +248,7 @@ void write1(const Doctor& doctor) {
 	return;
 }
 
-void enter1(Patient& patient) {
+void enter1(std::shared_ptr<Patient>& patient) {
 	int choice;
 	std::string name;
 	std::string date;
@@ -266,22 +262,25 @@ void enter1(Patient& patient) {
 	switch (choice) {
 	case 1:
 		std::cout << "Enter patient name: ";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::getline(std::cin, name);
-		patient.setName(name);
+		patient->setName(name);
 		break;
 	case 2:
 		do {
 			std::cout << "Enter date of birth (dd.mm.yyyy): ";
-			std::cin >> date;
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::getline(std::cin, date);
 		} while (!dateisValid(date));
-		patient.setDoB(date);
+		patient->setDoB(date);
 		break;
 	case 3:
 		do {
 			std::cout << "Entere phone number (8XXXXXXXXXX): ";
-			std::cin >> phone;
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::getline(std::cin, phone);
 		} while (!phoneisValid(phone));
-		patient.setPhone(phone);
+		patient->setPhone(phone);
 		break;
 	case 4:
 		return;
@@ -291,7 +290,7 @@ void enter1(Patient& patient) {
 	return;
 }
 
-void enter1(Doctor& doctor) {
+void enter1(std::shared_ptr<Doctor>& doctor) {
 	int choice;
 	std::string buffer;
 	std::cout << "Which characteristic to enter?" << '\n';
@@ -305,18 +304,21 @@ void enter1(Doctor& doctor) {
 	switch (choice) {
 	case 1:
 		std::cout << "Enter doctor name: ";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::getline(std::cin, buffer);
-		doctor.setName(buffer);
+		doctor->setName(buffer);
 		break;
 	case 2:
 		std::cout << "Enter speciality: ";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::getline(std::cin, buffer);
-		doctor.setSpec(buffer);
+		doctor->setSpec(buffer);
 		break;
 	case 3:
 		std::cout << "Enter office: ";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::getline(std::cin, buffer);
-		doctor.setOffice(buffer);
+		doctor->setOffice(buffer);
 		break;
 	case 4:
 		return;
@@ -326,59 +328,71 @@ void enter1(Doctor& doctor) {
 	return;
 }
 
-void enter(Patient& patient) {
+void enter(std::shared_ptr<Patient>& patient) {
 	std::string name;
 	std::string date;
 	std::string phone;
 	std::cout << "Enter patient name: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::getline(std::cin, name);
-	patient.setName(name);
+	patient->setName(name);
 	do {
 		std::cout << "Enter date of birth (dd.mm.yyyy): ";
-		std::cin >> date;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::getline(std::cin, date);
 	} while (!dateisValid(date));
-	patient.setDoB(date);
+	patient->setDoB(date);
 	do {
 		std::cout << "Enter phone number (8XXXXXXXXXX): ";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::getline(std::cin, phone);
 	} while (!phoneisValid(phone));
-	patient.setPhone(phone);
+	patient->setPhone(phone);
 	return;
 }
 
-void enter(Doctor& doctor) {
+void enter(std::shared_ptr<Doctor>& doctor) {
 	std::string buffer;
 	std::cout << "Enter doctor name: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::getline(std::cin, buffer);
-	doctor.setName(buffer);
+	doctor->setName(buffer);
 	std::cout << "Enter speciality: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::getline(std::cin, buffer);
-	doctor.setSpec(buffer);
+	doctor->setSpec(buffer);
 	std::cout << "Enter office: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::getline(std::cin, buffer);
-	doctor.setOffice(buffer);
+	doctor->setOffice(buffer);
 }
 
-void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::vector<Appoint>& appoints) {
+void docAppointManagement(std::shared_ptr<Doctor>& doctor, std::vector<std::shared_ptr<Patient>>& patients, std::vector<std::shared_ptr<Appoint>>& appoints) {
+	if (!doctor) return;
 	int choice;
 	int num;
 	int patID;
 	while (true) {
-		doctor.writeAppoints();
+		if (doctor->hasNoAppoints())
+			std::cout << "This doctor does not have appointments." << '\n';
+		else
+			doctor->writeAppoints();
 		std::cout << "1 - add appointment\n2 - add patient to appointment\n3 - delete appointment\n4 - cancel\n";
 		std::cin >> choice;
 		switch (choice) {
-		case 1:
-			appoints.push_back(addAppoint(doctor));
-			doctor += &appoints.back();
+		case 1: {
+			auto newAppoint = std::make_shared<Appoint>(addAppoint(doctor));
+			appoints.push_back(newAppoint);
+			*doctor += newAppoint;
 			break;
+		}
 		case 2:
 			do {
 				std::cout << "Enter number of the appointment from the list: ";
 				std::cin >> num;
-			} while (num > patients.size());
+			} while (num < 1 || num >= appoints.size());
 			num--;
-			if (doctor.hasPatient(num)) {
+			if (doctor->hasPatient(num)) {
 				std::cout << "This appointment is occupied.\n";
 				break;
 			}
@@ -386,8 +400,8 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 				std::cout << "Enter patient ID: ";
 				std::cin >> patID;
 			} while (!patientExist(patients, patID));
-			if (auto patientOpt = findPatient(patients, patID); patientOpt.has_value())
-				doctor.setPatient(num, patientOpt.value());
+			if (auto patientPtr = findPatient(patients, patID))
+				doctor->setPatient(num, patientPtr);
 			else
 				std::cout << "Unexpected error: user with such ID does not exist.\n";
 			break;
@@ -395,9 +409,9 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 			do {
 				std::cout << "Enter number of the appointment from the list: ";
 				std::cin >> num;
-			} while (num > patients.size());
+			} while (num < 1 || num >= appoints.size());
 			num--;
-			doctor.delAppoint(appoints, num);
+			doctor->delAppoint(appoints, num);
 			break;
 		case 4:
 			return;
@@ -407,37 +421,41 @@ void docAppointManagement(Doctor& doctor, std::vector<Patient>& patients, std::v
 	}
 }
 
-Appoint addAppoint(Doctor& doctor) {
+Appoint addAppoint(std::shared_ptr<Doctor>& doctor) {
 	Appoint newAppoint{ doctor };
+	std::cin.ignore(std::numeric_limits < std::streamsize>::max(), '\n');
 	do {
-		std::cin.ignore(std::numeric_limits < std::streamsize>::max(), '\n');
-		std::cin.clear();
 		std::cout << "Enter date (dd.mm.yyyy) and time (hh:mm) of the appointment: ";
 		std::cin >> newAppoint;
+		if (std::cin.fail()) {
+			std::cin.ignore(std::numeric_limits < std::streamsize>::max(), '\n');
+			std::cin.clear();
+			continue;
+		}
 	} while (!dateisValid(newAppoint.getDate()) || !timeisValid(newAppoint.getTime()));
 	return newAppoint;
 }
 
-bool patientExist(std::vector<Patient>& patients, int id) {
-	if (auto target = std::ranges::find_if(patients, [id](const Patient& patient) {
-		return patient.getID() == id;
+bool patientExist(std::vector<std::shared_ptr<Patient>>& patients, int id) {
+	if (auto target = std::ranges::find_if(patients, [id](const std::shared_ptr<Patient>& patient) {
+		return patient && patient->getID() == id;
 		}); target != patients.end())
 		return true;
 	return false;
 }
 
-std::optional<Patient> findPatient(std::vector<Patient>& patients, int id) {
-	if (auto target = std::ranges::find_if(patients, [id](const Patient& patient) {
-		return patient.getID() == id;
+std::shared_ptr<Patient> findPatient(std::vector<std::shared_ptr<Patient>>& patients, int id) {
+	if (auto target = std::ranges::find_if(patients, [id](const std::shared_ptr<Patient>& patient) {
+		return patient && patient->getID() == id;
 		}); target != patients.end())
 		return *target;
-	return std::nullopt;
+	return nullptr;
 }
 
 bool phoneisValid(std::string_view phone) {
 	if (phone.length() != 12)
 		return false;
-	if (phone[0] != 8)
+	if (phone[0] != '8')
 		return false;
 	return true;
 }

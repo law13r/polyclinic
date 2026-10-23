@@ -7,6 +7,7 @@
 #include <sstream>
 #include <chrono>
 #include <algorithm>
+#include <memory>
 
 class Appoint;
 class Person;
@@ -14,24 +15,24 @@ class Doctor;
 class Nurse;
 class Patient;
 
-void mainMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
+void mainMenu(std::vector<std::shared_ptr<Patient>>&, std::vector<std::shared_ptr<Doctor>>&, std::vector<std::shared_ptr<Appoint>>&);
 void patientMenu();
 void doctorMenu();
-void adminMenu(std::vector<Patient>&, std::vector<Doctor>&, std::vector<Appoint>&);
-void doctorsManagement(std::vector<Doctor>&, std::vector<Patient>&, std::vector<Appoint>&);
-void patientsManagement(std::vector<Patient>&);
-void printPatients(const std::vector<Patient>&);
-void printDoctors(const std::vector<Doctor>&);
+void adminMenu(std::vector<std::shared_ptr<Patient>>&, std::vector<std::shared_ptr<Doctor>>&, std::vector<std::shared_ptr<Appoint>>&);
+void doctorsManagement(std::vector<std::shared_ptr<Doctor>>&, std::vector<std::shared_ptr<Patient>>&, std::vector<std::shared_ptr<Appoint>>&);
+void patientsManagement(std::vector<std::shared_ptr<Patient>>&);
+void printPatients(const std::vector<std::shared_ptr<Patient>>&);
+void printDoctors(const std::vector<std::shared_ptr<Doctor>>&);
 bool dateisValid(const std::string&);
 bool timeisValid(const std::string&);
-void write1(const Patient&);
-void write1(const Doctor&);
-void enter1(Patient&);
-void enter1(Doctor&);
-void enter(Patient&);
-void enter(Doctor&);
-void docAppointManagement(Doctor&, std::vector<Patient>&, std::vector<Appoint>&);
-Appoint addAppoint(Doctor&);
-bool patientExist(std::vector<Patient>&, int);
-std::optional<Patient> findPatient(std::vector<Patient>&, int);
+void write1(const std::shared_ptr<Patient>&);
+void write1(const std::shared_ptr<Doctor>&);
+void enter1(std::shared_ptr<Patient>&);
+void enter1(std::shared_ptr<Doctor>&);
+void enter(std::shared_ptr<Patient>&);
+void enter(std::shared_ptr<Doctor>&);
+void docAppointManagement(std::shared_ptr<Doctor>&, std::vector<std::shared_ptr<Patient>>&, std::vector<std::shared_ptr<Appoint>>&);
+Appoint addAppoint(std::shared_ptr<Doctor>&);
+bool patientExist(std::vector<std::shared_ptr<Patient>>&, int);
+std::shared_ptr<Patient> findPatient(std::vector<std::shared_ptr<Patient>>&, int);
 bool phoneisValid(std::string_view);

@@ -6,25 +6,25 @@ private:
 	int id;
 	std::string name;
 	std::string phone;
-	std::vector<Appoint*> appoints;
+	std::vector<std::shared_ptr<Appoint>> appoints;
 public:
-	Person(int, std::string_view, std::string_view, const std::vector<Appoint*>&);
+	Person(int, std::string_view, std::string_view, const std::vector<std::shared_ptr<Appoint>>&);
 	Person(int, std::string_view, std::string_view);
 	explicit Person(int);
 
 	virtual int getID() const;
 	virtual std::string getName() const;
 	virtual std::string getPhone() const;
-	virtual std::vector<Appoint*> getAppoints() const;
+	virtual std::vector<std::shared_ptr<Appoint>> getAppoints() const;
 
 	virtual void setID(const int&);
 	virtual void setName(std::string_view);
 	virtual void setPhone(std::string_view);
-	virtual void setAppoints(std::vector<Appoint*>&);
+	virtual void setAppoints(std::vector<std::shared_ptr<Appoint>>&);
 
 	virtual bool hasNoAppoints() const;
 	virtual void writeAppoints() const;
-	virtual void delAppoint(std::vector<Appoint>&, const int&);
+	virtual void delAppoint(std::vector<std::shared_ptr<Appoint>>&, int);
 
 	friend std::ostream& operator<<(std::ostream& os, const Person& person) {
 		os << "Name: " << person.name << " Phone: " << person.phone;
@@ -36,8 +36,8 @@ public:
 			is >> person.phone;
 		return is;
 	}
-	Person& operator+=(Appoint* appoint);
-	Person& operator-=(Appoint* appoint);
+	Person& operator+=(std::shared_ptr<Appoint> appoint);
+	Person& operator-=(std::shared_ptr<Appoint> appoint);
 
 	friend class Doctor;
 	friend class Nurse;

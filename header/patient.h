@@ -6,7 +6,7 @@ class Patient : public Person {
 private:
 	std::string doB;
 public:
-	Patient(int, const std::string&, const std::string&, std::string_view, const std::vector<Appoint*>&);
+	Patient(int, const std::string&, const std::string&, std::string_view, const std::vector<std::shared_ptr<Appoint>>&);
 	Patient(int, const std::string&, const std::string&, std::string_view);
 	explicit Patient(int);
 

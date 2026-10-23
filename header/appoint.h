@@ -7,20 +7,20 @@ class Appoint {
 private:
 	std::string date;
 	std::string time;
-	Doctor doctor;
-	std::optional<Patient> patient;
+	std::shared_ptr<Doctor> doctor;
+	std::shared_ptr<Patient> patient;
 public:
-	Appoint(const Doctor&, Patient&, const std::string&, const std::string&);
-	Appoint(const Doctor&, const std::string&, const std::string&);
-	explicit Appoint(const Doctor&);
+	Appoint(std::shared_ptr<Doctor>, std::shared_ptr<Patient>, const std::string&, const std::string&);
+	Appoint(std::shared_ptr<Doctor>, const std::string&, const std::string&);
+	explicit Appoint(std::shared_ptr<Doctor>);
 
-	Doctor getDoctor() const;
-	std::optional<Patient> getPatient() const;
+	std::shared_ptr<Doctor> getDoctor() const;
+	std::shared_ptr<Patient> getPatient() const;
 	std::string getDate() const;
 	std::string getTime() const;
 
-	void setDoctor(const Doctor&);
-	void setPatient(const Patient&);
+	void setDoctor(std::shared_ptr<Doctor>);
+	void setPatient(std::shared_ptr<Patient>);
 	void setDate(std::string_view);
 	void setTime(std::string_view);
 
