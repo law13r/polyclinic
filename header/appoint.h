@@ -35,4 +35,12 @@ public:
 		is >> appoint.date >> appoint.time;
 		return is;
 	}
+
+	auto operator<=>(const Appoint& other) const {
+		return time <=> other.time;
+	}
+
+	bool operator==(const Appoint& other) const {
+		return time == other.time;
+	}
 };
