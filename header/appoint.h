@@ -2,6 +2,7 @@
 #include "lab.h"
 #include "patient.h"
 #include "doctor.h"
+#include "incomparableAppointmentsException.h"
 
 class Appoint {
 private:
@@ -25,7 +26,7 @@ public:
 	void setTime(std::string_view);
 
 	bool hasPatient() const;
-
+	
 	friend std::ostream& operator<<(std::ostream& os, const Appoint& appoint) {
 		os << appoint.date << ' ' << appoint.time;
 		return os;
@@ -38,13 +39,13 @@ public:
 
 	auto operator<=>(const Appoint& other) const {
 		if (doctor != other.doctor || patient != other.patient)
-			throw std::runtime_error("Nothing to compare\n");
+			throw IncomparableAppointmentsException();
 		return time <=> other.time;
 	}
 
 	bool operator==(const Appoint& other) const {
 		if (doctor != other.doctor || patient != other.patient)
-			throw std::runtime_error("Nothing to compare\n");
+			throw IncomparableAppointmentsException();
 		return time == other.time;
 	}
 };
