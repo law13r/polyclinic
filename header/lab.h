@@ -37,4 +37,4 @@ Appoint addAppoint(std::shared_ptr<Doctor>&);
 bool patientExist(std::vector<std::shared_ptr<Patient>>&, int);
 std::shared_ptr<Patient> findPatient(std::vector<std::shared_ptr<Patient>>&, int);
 bool phoneisValid(std::string_view);
-bool appointsOverlap(const std::shared_ptr<Appoint>&, const std::vector<std::shared_ptr<Appoint>>&);
+bool appointsOverlap(const Appoint&, const std::vector<std::shared_ptr<Appoint>>&);

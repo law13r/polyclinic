@@ -424,7 +424,7 @@ void docAppointManagement(std::shared_ptr<Doctor>& doctor, std::vector<std::shar
 Appoint addAppoint(std::shared_ptr<Doctor>& doctor) {
 	Appoint newAppoint{ doctor };
 	std::cin.ignore(std::numeric_limits < std::streamsize>::max(), '\n');
-	do {
+	while (true) {
 		std::cout << "Enter date (dd.mm.yyyy) and time (hh:mm) of the appointment: ";
 		std::cin >> newAppoint;
 		if (std::cin.fail()) {
@@ -432,7 +432,16 @@ Appoint addAppoint(std::shared_ptr<Doctor>& doctor) {
 			std::cin.clear();
 			continue;
 		}
-	} while (!dateisValid(newAppoint.getDate()) || !timeisValid(newAppoint.getTime()));
+		if (!dateisValid(newAppoint.getDate()) || !timeisValid(newAppoint.getTime())) {
+			std::cout << "Invalid date or time\n";
+			continue;
+		}
+		if (appointsOverlap(newAppoint, doctor->getAppoints())) {
+			std::cout << "Appointment to this time already exists\n";
+			continue;
+		}
+		break;
+	};
 	return newAppoint;
 }
 
@@ -460,8 +469,8 @@ bool phoneisValid(std::string_view phone) {
 	return true;
 }
 
-bool appointsOverlap(const std::shared_ptr<Appoint>& needle, const std::vector<std::shared_ptr<Appoint>>& haystack) {
-	for (const auto i : haystack)
-		if (needle == i) return true;
+bool appointsOverlap(const Appoint& needle, const std::vector<std::shared_ptr<Appoint>>& haystack) {
+	for (const auto& i : haystack)
+		if (needle == *i) return true;
 	return false;
 }
