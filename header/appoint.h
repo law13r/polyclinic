@@ -37,10 +37,14 @@ public:
 	}
 
 	auto operator<=>(const Appoint& other) const {
+		if (doctor != other.doctor || patient != other.patient)
+			throw std::runtime_error("Nothing to compare\n");
 		return time <=> other.time;
 	}
 
 	bool operator==(const Appoint& other) const {
+		if (doctor != other.doctor || patient != other.patient)
+			throw std::runtime_error("Nothing to compare\n");
 		return time == other.time;
 	}
 };

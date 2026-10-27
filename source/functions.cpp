@@ -459,3 +459,9 @@ bool phoneisValid(std::string_view phone) {
 		return false;
 	return true;
 }
+
+bool appointsOverlap(std::shared_ptr<Appoint>& needle, std::vector<std::shared_ptr<Appoint>>& haystack) {
+	for (const auto i : haystack)
+		if (needle == i) return true;
+	return false;
+}
